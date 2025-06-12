@@ -1,0 +1,5 @@
+.env
+notebookvenv/
+env/
+*.dylib
+*.so

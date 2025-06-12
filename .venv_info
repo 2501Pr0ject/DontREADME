@@ -1,0 +1,26 @@
+# 🐍 Environnement Virtuel DontREADME
+
+## Configuration
+- **Python**: 3.10.18
+- **Créé**: 12 juin 2025
+- **Statut**: ✅ Fonctionnel et testé
+
+## Packages Principaux
+- gradio 5.33.2
+- langchain 0.3.25
+- langchain-chroma 0.2.4
+- langchain-mistralai 0.1.0
+- chromadb 1.0.12
+- sentence-transformers 4.1.0
+
+## Activation
+```bash
+source venv/bin/activate
+```
+
+## Notes
+- Environnement stable sans conflits NumPy/TensorFlow
+- Compatible avec l'API HuggingFace pour les embeddings
+- Testé et validé pour toutes les fonctionnalités DontREADME
+
+---

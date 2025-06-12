@@ -1,0 +1,234 @@
+# Configuration Prefect pour DontREADME
+# Ce fichier définit la configuration des workflows et déploiements
+
+name: dont-readme-workflows
+description: "Workflows d'orchestration pour DontREADME - Chatbot documentaire"
+
+# Configuration du serveur Prefect
+server:
+  api_url: http://localhost:4200/api
+  ui_url: http://localhost:4200
+
+# Configuration des pools de workers
+work_pools:
+  - name: default-agent-pool
+    type: process
+    concurrency_limit: 3
+    description: "Pool par défaut pour les workflows DontREADME"
+
+# Définition des workflows
+flows:
+  # Traitement de documents
+  - name: batch_document_flow
+    description: "Traitement en lot de documents"
+    module: workflows.batch_processing
+    
+  - name: process_folder_documents
+    description: "Traitement complet d'un dossier de documents"
+    module: workflows.batch_processing
+    
+  - name: nightly_batch_processing
+    description: "Traitement nocturne automatisé"
+    module: workflows.batch_processing
+
+  # Maintenance
+  - name: database_maintenance_flow
+    description: "Maintenance de la base de données"
+    module: workflows.maintenance
+    
+  - name: cleanup_old_files_flow
+    description: "Nettoyage des anciens fichiers"
+    module: workflows.maintenance
+    
+  - name: weekly_maintenance_flow
+    description: "Maintenance hebdomadaire complète"
+    module: workflows.maintenance
+
+  # Monitoring
+  - name: health_check_flow
+    description: "Surveillance de santé système"
+    module: workflows.monitoring
+    
+  - name: performance_monitoring_flow
+    description: "Surveillance des performances"
+    module: workflows.monitoring
+    
+  - name: continuous_monitoring_flow
+    description: "Surveillance continue avec alertes"
+    module: workflows.monitoring
+
+  # Tests
+  - name: automated_testing_flow
+    description: "Tests automatisés complets"
+    module: workflows.testing
+    
+  - name: regression_testing_flow
+    description: "Tests de régression"
+    module: workflows.testing
+    
+  - name: smoke_testing_flow
+    description: "Tests smoke rapides"
+    module: workflows.testing
+
+# Configuration des déploiements programmés
+deployments:
+  # Traitement nocturne (quotidien)
+  - name: nightly-document-processing
+    flow_name: nightly_batch_processing
+    schedule:
+      cron: "0 2 * * *"  # 2h du matin tous les jours
+    parameters:
+      watch_folder: "./data/inbox"
+    tags: ["nightly", "automation", "batch"]
+    
+  # Maintenance hebdomadaire
+  - name: weekly-maintenance
+    flow_name: weekly_maintenance_flow
+    schedule:
+      cron: "0 3 * * 0"  # Dimanche 3h du matin
+    parameters:
+      notification_email: null
+    tags: ["weekly", "maintenance"]
+    
+  # Surveillance santé (toutes les 15 minutes)
+  - name: health-monitoring
+    flow_name: health_check_flow
+    schedule:
+      interval: 900  # 15 minutes en secondes
+    parameters:
+      alert_threshold: 70
+      notification_email: null
+    tags: ["monitoring", "health"]
+    
+  # Tests smoke quotidiens
+  - name: daily-smoke-tests
+    flow_name: smoke_testing_flow
+    schedule:
+      cron: "0 6 * * *"  # 6h du matin tous les jours
+    parameters:
+      api_key: null
+    tags: ["daily", "testing", "smoke"]
+    
+  # Maintenance base de données (bi-hebdomadaire)
+  - name: database-maintenance
+    flow_name: database_maintenance_flow
+    schedule:
+      cron: "0 1 * * 2,5"  # Mardi et vendredi 1h du matin
+    parameters:
+      vacuum_database: true
+      backup_database: true
+      optimize_collections: true
+    tags: ["database", "maintenance"]
+    
+  # Tests complets hebdomadaires
+  - name: weekly-full-tests
+    flow_name: automated_testing_flow
+    schedule:
+      cron: "0 4 * * 6"  # Samedi 4h du matin
+    parameters:
+      api_key: null
+      test_documents_folder: "./tests/documents"
+      generate_test_report: true
+    tags: ["weekly", "testing", "comprehensive"]
+
+# Configuration des variables d'environnement
+variables:
+  MISTRAL_API_KEY:
+    description: "Clé API Mistral AI"
+    type: secret
+    
+  NOTIFICATION_EMAIL:
+    description: "Email pour les notifications d'alerte"
+    type: string
+    default: null
+    
+  ALERT_THRESHOLD:
+    description: "Seuil d'alerte pour la santé système"
+    type: integer
+    default: 70
+    
+  WATCH_FOLDER:
+    description: "Dossier surveillé pour le traitement nocturne"
+    type: string
+    default: "./data/inbox"
+    
+  MAX_WORKERS:
+    description: "Nombre maximum de workers concurrents"
+    type: integer
+    default: 3
+
+# Configuration des tags pour organisation
+tags:
+  - nightly: "Workflows nocturnes automatisés"
+  - weekly: "Workflows hebdomadaires"
+  - daily: "Workflows quotidiens"
+  - maintenance: "Workflows de maintenance"
+  - monitoring: "Workflows de surveillance"
+  - testing: "Workflows de test"
+  - automation: "Workflows automatisés"
+  - batch: "Traitement en lot"
+  - health: "Vérifications de santé"
+  - database: "Opérations base de données"
+  - smoke: "Tests smoke"
+  - comprehensive: "Tests complets"
+
+# Configuration des notifications
+notifications:
+  - name: health-alerts
+    description: "Alertes de santé système"
+    enabled: true
+    conditions:
+      - health_score_below: 70
+      - system_error: true
+    
+  - name: maintenance-reports
+    description: "Rapports de maintenance"
+    enabled: true
+    conditions:
+      - maintenance_completed: true
+      - maintenance_failed: true
+    
+  - name: test-failures
+    description: "Échecs de tests"
+    enabled: true
+    conditions:
+      - test_failure_rate_above: 10
+
+# Configuration du logging
+logging:
+  level: INFO
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  handlers:
+    - type: file
+      filename: "./logs/prefect.log"
+      max_bytes: 10485760  # 10MB
+      backup_count: 5
+    - type: console
+      
+# Configuration des ressources
+resources:
+  memory_limit: "1GB"
+  cpu_limit: 2
+  storage_limit: "5GB"
+  
+# Configuration de la base de données Prefect (SQLite local)
+database:
+  connection_url: "sqlite+aiosqlite:///./data/prefect.db"
+  
+# Configuration des artefacts et stockage
+storage:
+  type: local
+  path: "./data/prefect_storage"
+  
+# Configuration des secrets (à adapter selon l'environnement)
+secrets:
+  - name: mistral-api-key
+    description: "Clé API Mistral AI"
+    # La valeur doit être définie via la CLI Prefect ou l'interface web
+    
+# Configuration de la surveillance
+monitoring:
+  health_check_interval: 300  # 5 minutes
+  performance_tracking: true
+  error_tracking: true
+  metrics_retention_days: 30
