@@ -402,12 +402,6 @@ python -c "from workflows.tasks import check_system_health; print(check_system_h
 - **Issues GitHub** : Rapporter bugs et demandes de fonctionnalités
 - **Discussions** : Forum communautaire pour questions
 
-### Contact
-- **Email** : support@dontreadme.ai
-- **GitHub** : Issues et Pull Requests
-- **Discord** : Communauté active d'utilisateurs
-- **LinkedIn** : Nouvelles et mises à jour
-
 ---
 
 ## 🎯 Conclusion
