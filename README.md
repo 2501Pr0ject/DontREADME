@@ -1,10 +1,10 @@
-# 🤖 DontREADME - Plateforme d'Analyse Documentaire Intelligente
+# DontREADME - Plateforme d'Analyse Documentaire Intelligente
 
 > **ChatBot documentaire avancé avec orchestration Prefect intégrée**
 
 DontREADME transforme vos documents en une base de connaissances conversationnelle puissante. Analysez, questionnez et automatisez le traitement de vos PDF, DOCX et fichiers texte avec l'intelligence artificielle Mistral AI.
 
-## ✨ Fonctionnalités Principales
+## Fonctionnalités Principales
 
 ### 🧠 **Intelligence Documentaire**
 - **Analyse multiformat** : PDF, DOCX, TXT
@@ -175,12 +175,6 @@ Template: academic | Sources: 3 | Performance: 2.34s
 ⏱️ Durée: 45.3 secondes
 💾 Amélioration santé: +3.2 points
 ```
-
-#### Workflows Programmés
-- **Quotidien 02h00** : Traitement nocturne des nouveaux documents
-- **Quotidien 06h00** : Tests de validation système
-- **Bi-hebdomadaire** : Maintenance base de données
-- **Hebdomadaire** : Maintenance complète et rapports
 
 ### 5. **Monitoring et Performance**
 
@@ -394,19 +388,9 @@ python -c "from workflows.tasks import check_system_health; print(check_system_h
 - **Communauté** : Partage de templates et workflows
 - **Formation** : Tutoriels et webinaires
 
-## 📞 Support et Communauté
-
-### Aide
-- **Documentation** : Ce README complet
-- **Guide technique** : `DEVELOPER_GUIDE.md` pour les développeurs
-- **Issues GitHub** : Rapporter bugs et demandes de fonctionnalités
-- **Discussions** : Forum communautaire pour questions
-
 ---
 
 ## 🎯 Conclusion
-
-**DontREADME** n'est pas qu'un simple chatbot documentaire. C'est une **plateforme complète d'intelligence documentaire** qui transforme votre façon de travailler avec l'information.
 
 ### Pourquoi Choisir DontREADME ?
 
@@ -416,7 +400,9 @@ python -c "from workflows.tasks import check_system_health; print(check_system_h
 🛡️ **Sécurité** : Traitement local, contrôle total de vos données
 📈 **Évolutivité** : Architecture extensible et personnalisable
 
-### Démarrez Maintenant !
+Mais surtout : **La Flemme de tout lire !!**
+
+### Démarrez Maintenant 
 
 ```bash
 # Installation en une commande
@@ -433,4 +419,5 @@ git clone <repo> && cd DontREADME && python scripts/setup_orchestration.py
   ou 
 
   python app/main.py# DontREADME
+  
 # DontREADME
