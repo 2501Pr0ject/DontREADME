@@ -420,4 +420,4 @@ git clone <repo> && cd DontREADME && python scripts/setup_orchestration.py
 
   python app/main.py# DontREADME
   
-# DontREADME
+## DontREADME est le fruit d'une sorte de Hackathon individuel d'une durée de 36 heures, durant ma formation de Chef de Projet IA.
