@@ -1,22 +1,22 @@
-# 🤖 CLAUDE.md - Documentation Développeur
+#  CLAUDE.md - Documentation Développeur
 
 > *Fichier créé par Claude Sonnet 4 - Assistant IA d'Anthropic*
 
-## 📋 Contexte du Projet
+##  Contexte du Projet
 
 **DontREADME** est un projet de ChatBot documentaire développé en collaboration avec Claude le **12 juin 2025**. L'objectif était de créer une application similaire à [SecInsights.ai](https://www.secinsights.ai/) en utilisant des technologies open source et gratuites.
 
-## 🎯 Objectifs Initiaux
+##  Objectifs Initiaux
 
 L'utilisateur souhaitait créer une application capable de :
-- ✅ **Analyser des documents** (PDF, DOCX, TXT) via upload
-- ✅ **Répondre à des questions** en langage naturel sur le contenu
-- ✅ **Utiliser LangChain** pour la logique RAG (Retrieval-Augmented Generation)
-- ✅ **Intégrer Mistral AI** comme LLM (préféré à OpenAI pour des raisons de coût)
-- ✅ **Utiliser ChromaDB** comme base vectorielle
-- ✅ **Interface Gradio** pour la simplicité d'utilisation
+- [OK] **Analyser des documents** (PDF, DOCX, TXT) via upload
+- [OK] **Répondre à des questions** en langage naturel sur le contenu
+- [OK] **Utiliser LangChain** pour la logique RAG (Retrieval-Augmented Generation)
+- [OK] **Intégrer Mistral AI** comme LLM (préféré à OpenAI pour des raisons de coût)
+- [OK] **Utiliser ChromaDB** comme base vectorielle
+- [OK] **Interface Gradio** pour la simplicité d'utilisation
 
-## 🏗️ Architecture Développée
+##  Architecture Développée
 
 ### Évolution du Projet
 Le projet a évolué en **deux phases** :
@@ -61,31 +61,31 @@ DontREADME/
 └── CLAUDE.md                # 🆕 Cette documentation
 ```
 
-## 🧠 Décisions Techniques
+##  Décisions Techniques
 
 ### Choix du LLM : Mistral AI
 **Pourquoi Mistral plutôt qu'OpenAI ?**
-- ✅ **Gratuit** avec API (limitations acceptables)
-- ✅ **Français** (entreprise et modèle)
-- ✅ **Performance** comparable pour les cas d'usage visés
-- ✅ **Éthique** et transparence
-- ❌ OpenAI était payant dès le départ
+- [OK] **Gratuit** avec API (limitations acceptables)
+- [OK] **Français** (entreprise et modèle)
+- [OK] **Performance** comparable pour les cas d'usage visés
+- [OK] **Éthique** et transparence
+- [ERROR] OpenAI était payant dès le départ
 
 ### Choix des Embeddings : Sentence-Transformers
 **Pourquoi pas OpenAI Embeddings ?**
-- ✅ **Complètement gratuit** (pas de limite API)
-- ✅ **Fonctionne hors ligne** une fois téléchargé
-- ✅ **Multilingue** (français/anglais optimisé)
-- ✅ **Performant** pour la similarité sémantique
-- ❌ OpenAI était payant même pour les embeddings
+- [OK] **Complètement gratuit** (pas de limite API)
+- [OK] **Fonctionne hors ligne** une fois téléchargé
+- [OK] **Multilingue** (français/anglais optimisé)
+- [OK] **Performant** pour la similarité sémantique
+- [ERROR] OpenAI était payant même pour les embeddings
 
 ### Choix de l'Interface : Gradio vs Streamlit
 **Pourquoi Gradio ?**
-- ✅ **Plus simple** pour les cas d'usage IA/ML
-- ✅ **Déploiement facile** avec partage public possible
-- ✅ **Composants optimisés** pour l'IA (Chatbot, File upload)
-- ✅ **Thèmes modernes** intégrés
-- ❌ Streamlit mentionné initialement mais Gradio préféré
+- [OK] **Plus simple** pour les cas d'usage IA/ML
+- [OK] **Déploiement facile** avec partage public possible
+- [OK] **Composants optimisés** pour l'IA (Chatbot, File upload)
+- [OK] **Thèmes modernes** intégrés
+- [ERROR] Streamlit mentionné initialement mais Gradio préféré
 
 ## 💡 Innovations Techniques
 
@@ -126,7 +126,7 @@ DontREADME/
 - **Historique des performances** avec export
 - **Surveillance système** continue
 
-## 🔄 Processus de Développement
+##  Processus de Développement
 
 ### Méthode de Travail
 1. **Analyse des besoins** : Discussion sur les objectifs et contraintes
@@ -149,7 +149,7 @@ DontREADME/
 **Problème** : Chaque type de document nécessite une approche différente
 **Solution** : Système de détection automatique + templates spécialisés
 
-## 🎯 Fonctionnalités Clés Développées
+##  Fonctionnalités Clés Développées
 
 ### Interface Utilisateur
 - **3 onglets spécialisés** : Configuration, Chat, Monitoring
@@ -169,7 +169,7 @@ DontREADME/
 - **Surveillance des ressources** système
 - **Logging complet** des erreurs et succès
 
-## 🔍 Analyse Technique Approfondie
+##  Analyse Technique Approfondie
 
 ### Flux de Données
 ```
@@ -193,7 +193,7 @@ DontREADME/
 - **Protection contre l'injection** de code malveillant
 - **Limitation de taille** des fichiers et requêtes
 
-## 📊 Métriques de Qualité
+##  Métriques de Qualité
 
 ### Performance Type
 - **Temps de traitement document** : ~2-5 secondes (dépend de la taille)
@@ -207,7 +207,7 @@ DontREADME/
 - **Langues optimisées** : Français, Anglais
 - **Questions simultanées** : Interface mono-utilisateur
 
-## 🚀 Améliorations Futures Suggérées
+##  Améliorations Futures Suggérées
 
 ### Court Terme (< 1 mois)
 - [ ] **Support PowerPoint** (.pptx)
@@ -247,26 +247,26 @@ DontREADME/
 - **Rate limiting** pour éviter l'abus
 - **Logs de sécurité** pour détecter les intrusions
 
-## 📝 Notes de Version
+##  Notes de Version
 
 ### v1.0 - Version Enhanced (Finale)
-- ✅ Architecture modulaire complète
-- ✅ Découpage intelligent des documents
-- ✅ Templates de prompts optimisés
-- ✅ Validation et sécurité renforcées
-- ✅ Monitoring de performance intégré
-- ✅ Interface utilisateur enrichie (3 onglets)
-- ✅ Export de session et métadonnées
-- ✅ Support Mistral AI + embeddings gratuits
+- [OK] Architecture modulaire complète
+- [OK] Découpage intelligent des documents
+- [OK] Templates de prompts optimisés
+- [OK] Validation et sécurité renforcées
+- [OK] Monitoring de performance intégré
+- [OK] Interface utilisateur enrichie (3 onglets)
+- [OK] Export de session et métadonnées
+- [OK] Support Mistral AI + embeddings gratuits
 
 ### v0.1 - Version Simple (Prototype)
-- ✅ Fonctionnalités RAG de base
-- ✅ Interface Gradio simple
-- ✅ Support PDF/DOCX/TXT
-- ✅ Integration Mistral AI
-- ✅ ChromaDB local
+- [OK] Fonctionnalités RAG de base
+- [OK] Interface Gradio simple
+- [OK] Support PDF/DOCX/TXT
+- [OK] Integration Mistral AI
+- [OK] ChromaDB local
 
-## 🎯 Conclusion du Développement
+##  Conclusion du Développement
 
 Le projet **DontREADME** a atteint et dépassé ses objectifs initiaux. La version finale offre :
 
@@ -281,4 +281,4 @@ Le code est **prêt pour la production** avec des améliorations futures possibl
 ---
 
 *Documentation générée par Claude Sonnet 4 (Anthropic) le 12 juin 2025*  
-*Collaboration humain-IA pour le développement du projet DontREADME* 🤖✨
+*Collaboration humain-IA pour le développement du projet DontREADME* 

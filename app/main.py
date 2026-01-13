@@ -47,12 +47,12 @@ class EnhancedDocumentChatBot:
                 # Validation du fichier
                 file_valid, file_error = FileValidator.validate_file(file_obj)
                 if not file_valid:
-                    return f"❌ {file_error}", "", "", []
+                    return f"[ERREUR] {file_error}", "", "", []
                 
                 # Validation de la clé API
                 api_valid, api_error = InputValidator.validate_api_key(api_key.strip(), 'mistral')
                 if not api_valid:
-                    return f"❌ {api_error}", "", "", []
+                    return f"[ERREUR] {api_error}", "", "", []
                 
                 # Configuration du LLM
                 self.chat_engine.setup_llm(api_key.strip())
@@ -81,18 +81,18 @@ class EnhancedDocumentChatBot:
                 self.system_status = self.chat_engine.get_system_status()
                 
                 # Messages de statut
-                status = f"✅ Document traité avec succès!"
-                
+                status = f"[OK] Document traité avec succès!"
+
                 doc_info = f"""
-### 📄 Informations du document
+### Informations du document
 - **Fichier**: {filename}
 - **Type détecté**: {doc_details['document_type']}
 - **Chunks créés**: {num_chunks}
 - **Taille moyenne des chunks**: {doc_details['average_chunk_size']:.0f} caractères
 - **Structure préservée**: {doc_details['structure_preserved']} sections
-- **Mots-clés extraits**: {'✅' if doc_details['keywords_extracted'] else '❌'}
+- **Mots-clés extraits**: {'Oui' if doc_details['keywords_extracted'] else 'Non'}
 
-### ⚙️ Configuration
+### Configuration
 - **Template utilisé**: {self.chat_engine.current_template_type}
 - **Documents récupérés**: {k_documents}
 - **Modèle**: Mistral AI (mistral-tiny)
@@ -103,7 +103,7 @@ class EnhancedDocumentChatBot:
                 system_info = self.global_monitor.get_system_info()
                 
                 perf_info = f"""
-### 📊 Performance
+### Performance
 - **Temps de traitement**: {perf_summary.get('avg_duration', 0):.2f}s
 - **Utilisation mémoire**: {system_info['memory_percent']:.1f}%
 - **CPU**: {system_info['cpu_percent']:.1f}%
@@ -116,7 +116,7 @@ class EnhancedDocumentChatBot:
                 return status, doc_info, perf_info, empty_chat_history
                 
             except Exception as e:
-                error_msg = f"❌ Erreur: {str(e)}"
+                error_msg = f"[ERREUR] {str(e)}"
                 return error_msg, "", "", []
         
         return _process()
@@ -130,7 +130,7 @@ class EnhancedDocumentChatBot:
         """
         if not self.document_processed:
             history.append({"role": "user", "content": message})
-            history.append({"role": "assistant", "content": "⚠️ Veuillez d'abord traiter un document dans l'onglet Configuration."})
+            history.append({"role": "assistant", "content": "Veuillez d'abord traiter un document dans l'onglet Configuration."})
             return "", history, ""
         
         if not message.strip():
@@ -149,9 +149,9 @@ class EnhancedDocumentChatBot:
                 if i < len(metadata.get('source_details', [])):
                     detail = metadata['source_details'][i]
                     keywords_str = ', '.join(detail['keywords'][:3]) if detail['keywords'] else 'N/A'
-                    source_details.append(f"📄 {source} | 🏷️ Mots-clés: {keywords_str}")
+                    source_details.append(f"[{source}] Mots-clés: {keywords_str}")
                 else:
-                    source_details.append(f"📄 {source}")
+                    source_details.append(f"[{source}]")
             
             formatted_answer = f"{answer}\n\n**Sources consultées:**\n" + "\n".join(source_details)
         else:
@@ -170,12 +170,12 @@ class EnhancedDocumentChatBot:
     def get_detailed_status(self) -> str:
         """Retourne un statut détaillé du système"""
         if not self.document_processed:
-            return "🔴 **Statut**: Aucun document traité"
-        
+            return "**Statut**: Aucun document traité"
+
         status = self.chat_engine.get_system_status()
-        
+
         status_text = f"""
-### 🟢 Système opérationnel
+### Système opérationnel
 
 **Configuration actuelle:**
 - Template: {status['current_template']}
@@ -212,10 +212,10 @@ class EnhancedDocumentChatBot:
             with open(filename, 'w', encoding='utf-8') as f:
                 json.dump(session_data, f, indent=2, ensure_ascii=False, default=str)
             
-            return f"✅ Session exportée: {filename}"
-            
+            return f"[OK] Session exportée: {filename}"
+
         except Exception as e:
-            return f"❌ Erreur d'export: {str(e)}"
+            return f"[ERREUR] Erreur d'export: {str(e)}"
 
 # Integration dans l'interface Gradio
 def create_enhanced_interface():
@@ -351,74 +351,72 @@ def create_enhanced_interface():
         
         with gr.Tabs():
             # Onglet Configuration simplifié
-            with gr.Tab("📄 Document", id="document"):
-                
+            with gr.Tab("Document", id="document"):
+
                 with gr.Row():
                     with gr.Column(scale=2):
                         api_key_input = gr.Textbox(
-                            label="🔑 Clé API Mistral AI",
+                            label="Clé API Mistral AI",
                             placeholder="Saisissez votre clé API Mistral...",
                             type="password",
                             info="Validation automatique de la clé"
                         )
-                        
+
                         file_upload = gr.File(
-                            label="📁 Fichier à analyser",
+                            label="Fichier à analyser",
                             file_types=[".pdf", ".docx", ".txt"],
                             type="filepath"
                         )
-                        
+
                         with gr.Row():
                             chunk_size_slider = gr.Slider(
                                 minimum=200,
                                 maximum=2000,
                                 value=Config.DEFAULT_CHUNK_SIZE,
                                 step=100,
-                                label="📏 Taille des chunks",
+                                label="Taille des chunks",
                                 info="Découpage intelligent automatique"
                             )
-                            
+
                             k_documents_slider = gr.Slider(
                                 minimum=1,
                                 maximum=10,
                                 value=Config.DEFAULT_K_DOCUMENTS,
                                 step=1,
-                                label="🔍 Documents récupérés"
+                                label="Documents récupérés"
                             )
-                        
+
                         template_dropdown = gr.Dropdown(
                             choices=['auto', 'general', 'academic', 'technical', 'legal'],
                             value='auto',
-                            label="🎯 Type de template",
+                            label="Type de template",
                             info="Auto = détection automatique"
                         )
-                        
-                        process_btn = gr.Button("🚀 Traiter le document", variant="primary", size="lg")
-                    
+
+                        process_btn = gr.Button("Traiter le document", variant="primary", size="lg")
+
                     with gr.Column(scale=1):
                         status_output = gr.Textbox(
-                            label="📊 Statut",
+                            label="Statut",
                             interactive=False,
                             lines=2
                         )
-                        
+
                         doc_info_output = gr.Markdown(
-                            label="ℹ️ Informations détaillées"
+                            label="Informations détaillées"
                         )
-                        
+
                         perf_info_output = gr.Markdown(
-                            label="⚡ Performance",
+                            label="Performance",
                             elem_classes=["performance-info"]
                         )
-            
+
             # Onglet Chat Amélioré
-            with gr.Tab("💬 Chat Intelligent", id="chat"):
+            with gr.Tab("Chat Intelligent", id="chat"):
                 
                 chatbot = gr.Chatbot(
                     label="Conversation avec intelligence augmentée",
-                    height=500,
-                    show_copy_button=True,
-                    type="messages"
+                    height=500
                 )
                 
                 with gr.Row():
@@ -429,12 +427,12 @@ def create_enhanced_interface():
                     )
                     
                     with gr.Column(scale=1):
-                        send_btn = gr.Button("📤 Envoyer", variant="primary")
-                        clear_btn = gr.Button("🗑️ Effacer", variant="secondary")
-                
+                        send_btn = gr.Button("Envoyer", variant="primary")
+                        clear_btn = gr.Button("Effacer", variant="secondary")
+
                 # Informations de métadonnées en temps réel
                 metadata_display = gr.Textbox(
-                    label="🔍 Métadonnées de la réponse",
+                    label="Métadonnées de la réponse",
                     interactive=False,
                     lines=1,
                     elem_classes=["performance-info"]

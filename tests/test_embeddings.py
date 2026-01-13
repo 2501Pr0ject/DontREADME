@@ -9,7 +9,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 def test_huggingface_api_embeddings():
     """Test des embeddings HuggingFace API"""
-    print("🧪 Test des embeddings HuggingFace API")
+    print(" Test des embeddings HuggingFace API")
     print("=" * 40)
     
     try:
@@ -17,36 +17,36 @@ def test_huggingface_api_embeddings():
         
         # Initialisation
         embeddings = HuggingFaceAPIEmbeddings()
-        print("✅ Initialisation réussie")
+        print("[OK] Initialisation réussie")
         
         # Test d'un embedding simple
         test_text = "Ceci est un test d'embedding"
         result = embeddings.embed_query(test_text)
         
         if isinstance(result, list) and len(result) == 384:
-            print(f"✅ Embedding généré: {len(result)} dimensions")
+            print(f"[OK] Embedding généré: {len(result)} dimensions")
             print(f"   Exemple: [{result[0]:.3f}, {result[1]:.3f}, ...]")
         else:
-            print(f"⚠️ Embedding inattendu: {type(result)}, longueur: {len(result) if isinstance(result, list) else 'N/A'}")
+            print(f"[WARN] Embedding inattendu: {type(result)}, longueur: {len(result) if isinstance(result, list) else 'N/A'}")
         
         # Test d'embeddings multiples
         test_docs = ["Document 1", "Document 2", "Document 3"]
         results = embeddings.embed_documents(test_docs)
         
         if len(results) == 3 and all(len(emb) == 384 for emb in results):
-            print(f"✅ Embeddings multiples: {len(results)} documents")
+            print(f"[OK] Embeddings multiples: {len(results)} documents")
         else:
-            print(f"⚠️ Problème avec embeddings multiples")
+            print(f"[WARN] Problème avec embeddings multiples")
         
         return True
         
     except Exception as e:
-        print(f"❌ Erreur: {e}")
+        print(f"[ERROR] Erreur: {e}")
         return False
 
 def test_vectorstore_integration():
     """Test de l'intégration avec ChromaDB"""
-    print("\n🧪 Test d'intégration ChromaDB")
+    print("\n Test d'intégration ChromaDB")
     print("=" * 35)
     
     try:
@@ -54,14 +54,14 @@ def test_vectorstore_integration():
         
         # Initialisation
         manager = EnhancedVectorStoreManager()
-        print("✅ VectorStore Manager initialisé")
+        print("[OK] VectorStore Manager initialisé")
         
         # Test d'initialisation
         success = manager.initialize_vectorstore(collection_name="test_collection")
         if success:
-            print("✅ VectorStore initialisé")
+            print("[OK] VectorStore initialisé")
         else:
-            print("❌ Échec d'initialisation VectorStore")
+            print("[ERROR] Échec d'initialisation VectorStore")
             return False
         
         # Test d'ajout de documents
@@ -78,20 +78,20 @@ def test_vectorstore_integration():
             chunk_overlap=20
         )
         
-        print(f"✅ Document ajouté: {num_chunks} chunks")
+        print(f"[OK] Document ajouté: {num_chunks} chunks")
         print(f"   Type détecté: {doc_info['document_type']}")
         
         # Test de recherche
         results = manager.search_with_metadata("document test", k=2)
         if results:
-            print(f"✅ Recherche fonctionnelle: {len(results)} résultats")
+            print(f"[OK] Recherche fonctionnelle: {len(results)} résultats")
         else:
-            print("⚠️ Aucun résultat de recherche")
+            print("[WARN] Aucun résultat de recherche")
         
         return True
         
     except Exception as e:
-        print(f"❌ Erreur: {e}")
+        print(f"[ERROR] Erreur: {e}")
         import traceback
         traceback.print_exc()
         return False
@@ -113,12 +113,12 @@ def run_all_tests():
     passed = sum(results)
     total = len(results)
     
-    print(f"\n📊 RÉSULTATS: {passed}/{total} tests réussis")
+    print(f"\n RÉSULTATS: {passed}/{total} tests réussis")
     
     if passed == total:
-        print("🎉 Tous les tests d'embeddings sont OK!")
+        print(" Tous les tests d'embeddings sont OK!")
     else:
-        print("⚠️ Certains tests ont échoué - vérifiez la configuration")
+        print("[WARN] Certains tests ont échoué - vérifiez la configuration")
     
     return passed == total
 

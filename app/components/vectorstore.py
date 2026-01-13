@@ -42,11 +42,11 @@ class HuggingFaceAPIEmbeddings:
                 timeout=10
             )
             if test_response.status_code == 200:
-                print("✅ Connexion API HuggingFace établie")
+                print("[OK] Connexion API HuggingFace établie")
             else:
-                print(f"⚠️ API HuggingFace: statut {test_response.status_code}")
+                print(f"[WARN] API HuggingFace: statut {test_response.status_code}")
         except Exception as e:
-            print(f"⚠️ Test API HuggingFace échoué: {e}")
+            print(f"[WARN] Test API HuggingFace échoué: {e}")
     
     def name(self):
         """Nom de la fonction d'embedding pour ChromaDB"""
@@ -81,16 +81,16 @@ class HuggingFaceAPIEmbeddings:
                         return [embeddings]  # Un seul embedding
                         
                 elif response.status_code == 503:  # Service temporairement indisponible
-                    print(f"⏳ API HuggingFace occupée, tentative {attempt + 1}/{max_retries}")
+                    print(f" API HuggingFace occupée, tentative {attempt + 1}/{max_retries}")
                     import time
                     time.sleep(2 ** attempt)  # Backoff exponentiel
                     continue
                 else:
-                    print(f"❌ Erreur API HuggingFace: {response.status_code} - {response.text}")
+                    print(f"[ERROR] Erreur API HuggingFace: {response.status_code} - {response.text}")
                     break
                     
             except Exception as e:
-                print(f"❌ Erreur réseau API HuggingFace: {e}")
+                print(f"[ERROR] Erreur réseau API HuggingFace: {e}")
                 if attempt < max_retries - 1:
                     import time
                     time.sleep(1)
@@ -98,7 +98,7 @@ class HuggingFaceAPIEmbeddings:
                 break
         
         # Fallback vers embeddings factices en cas d'échec
-        print("⚠️ Utilisation d'embeddings factices comme fallback")
+        print("[WARN] Utilisation d'embeddings factices comme fallback")
         return self._generate_fake_embeddings(texts)
     
     def _generate_fake_embeddings(self, texts: List[str]):
@@ -184,10 +184,10 @@ class EnhancedVectorStoreManager:
     def _setup_embeddings(self):
         @self.performance_monitor.measure_performance("setup_embeddings")
         def _setup():
-            print("🔧 Initialisation des embeddings HuggingFace API...")
+            print(" Initialisation des embeddings HuggingFace API...")
             # Utiliser l'API HuggingFace pour des vrais embeddings sans dépendances locales
             self.embeddings = HuggingFaceAPIEmbeddings()
-            print("✅ Embeddings HuggingFace API initialisés - Vrais embeddings activés")
+            print("[OK] Embeddings HuggingFace API initialisés - Vrais embeddings activés")
         
         _setup()
     
@@ -202,16 +202,16 @@ class EnhancedVectorStoreManager:
         def _initialize():
             try:
                 if not self.embeddings:
-                    print("❌ Erreur : Embeddings non initialisés")
+                    print("[ERROR] Erreur : Embeddings non initialisés")
                     return False
                 
-                print(f"🔧 Initialisation du VectorStore avec {type(self.embeddings).__name__}...")
+                print(f" Initialisation du VectorStore avec {type(self.embeddings).__name__}...")
                     
                 os.makedirs(Config.CHROMADB_PATH, exist_ok=True)
                 client = chromadb.PersistentClient(path=Config.CHROMADB_PATH)
                 
                 # Créer ou récupérer le vectorstore (Chroma gère automatiquement la collection)
-                print(f"📝 Initialisation de la collection '{collection_name}'...")
+                print(f" Initialisation de la collection '{collection_name}'...")
                 
                 self.vectorstore = Chroma(
                     client=client,
@@ -219,11 +219,11 @@ class EnhancedVectorStoreManager:
                     embedding_function=self.embeddings,
                 )
                 
-                print(f"✅ VectorStore initialisé avec la collection '{collection_name}'")
+                print(f"[OK] VectorStore initialisé avec la collection '{collection_name}'")
                 return True
                 
             except Exception as e:
-                print(f"❌ Erreur lors de l'initialisation du VectorStore: {e}")
+                print(f"[ERROR] Erreur lors de l'initialisation du VectorStore: {e}")
                 print(f"   Type d'erreur: {type(e).__name__}")
                 self.vectorstore = None
                 return False
@@ -237,16 +237,16 @@ class EnhancedVectorStoreManager:
         
         try:
             client.delete_collection(collection_name)
-            print(f"🗑️ Collection '{collection_name}' supprimée")
+            print(f" Collection '{collection_name}' supprimée")
         except ValueError:
-            print(f"ℹ️ Collection '{collection_name}' n'existait pas")
+            print(f" Collection '{collection_name}' n'existait pas")
         
         self.vectorstore = Chroma(
             client=client,
             collection_name=collection_name,
             embedding_function=self.embeddings,
         )
-        print(f"✅ Nouvelle collection '{collection_name}' créée")
+        print(f"[OK] Nouvelle collection '{collection_name}' créée")
     
     def add_documents_enhanced(self, 
                              text: str, 
@@ -266,14 +266,14 @@ class EnhancedVectorStoreManager:
         def _add_documents():
             # Auto-initialisation du VectorStore si nécessaire
             if not self.vectorstore:
-                print("🔧 Auto-initialisation du VectorStore...")
+                print(" Auto-initialisation du VectorStore...")
                 success = self.initialize_vectorstore()
                 
                 # Vérifier que l'initialisation a réussi
                 if not success or not self.vectorstore:
                     raise ValueError("Échec d'initialisation du VectorStore")
             
-            # ✅ VÉRIFICATION: Embeddings disponibles
+            # [OK] VÉRIFICATION: Embeddings disponibles
             if not self.embeddings:
                 raise ValueError("Embeddings non initialisés")
             
@@ -290,7 +290,7 @@ class EnhancedVectorStoreManager:
             
             # Ajout à la base vectorielle
             self.vectorstore.add_documents(filtered_documents)
-            print(f"✅ {len(filtered_documents)} chunks ajoutés à la collection")
+            print(f"[OK] {len(filtered_documents)} chunks ajoutés à la collection")
             
             # Informations détaillées sur le traitement
             doc_info = {
@@ -340,7 +340,7 @@ class EnhancedVectorStoreManager:
         """Retourner un retriever pour LangChain"""
         if not self.vectorstore:
             # Auto-initialisation si nécessaire
-            print("🔧 Auto-initialisation du VectorStore pour le retriever...")
+            print(" Auto-initialisation du VectorStore pour le retriever...")
             success = self.initialize_vectorstore()
             if not success or not self.vectorstore:
                 raise ValueError("Impossible d'initialiser le VectorStore pour le retriever")
@@ -358,19 +358,19 @@ class EnhancedVectorStoreManager:
         def _search():
             # Auto-initialisation du VectorStore si nécessaire
             if not self.vectorstore:
-                print("🔧 Auto-initialisation du VectorStore pour la recherche...")
+                print(" Auto-initialisation du VectorStore pour la recherche...")
                 success = self.initialize_vectorstore()
                 
                 # Si toujours pas de vectorstore, retourner vide
                 if not success or not self.vectorstore:
-                    print("⚠️ VectorStore non disponible - aucun résultat")
+                    print("[WARN] VectorStore non disponible - aucun résultat")
                     return []
             
-            # ✅ VÉRIFICATION: Collection existe
+            # [OK] VÉRIFICATION: Collection existe
             try:
                 documents = self.vectorstore.similarity_search(query, k=k)
             except Exception as e:
-                print(f"❌ Erreur lors de la recherche: {e}")
+                print(f"[ERROR] Erreur lors de la recherche: {e}")
                 return []
             
             # Enrichissement des résultats avec métadonnées

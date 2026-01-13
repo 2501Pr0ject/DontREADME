@@ -33,7 +33,7 @@ class OrchestrationInterface:
             
             # Informations de connexion pour debug
             connection_info = f"""
-**Statut connexion**: {'🟢 Connecté' if status.get('server_running') else '🔴 Déconnecté'}
+**Statut connexion**: {' Connecté' if status.get('server_running') else ' Déconnecté'}
 **URL API**: {status.get('api_url', 'Non configuré')}
 **Dernière vérification**: {self.last_status_update.strftime('%H:%M:%S')}
             """.strip()
@@ -42,7 +42,7 @@ class OrchestrationInterface:
             
         except Exception as e:
             error_msg = f"""
-## ❌ Erreur de connexion Prefect
+## [ERROR] Erreur de connexion Prefect
 
 **Erreur**: {str(e)}
 
@@ -52,7 +52,7 @@ class OrchestrationInterface:
 3. Tester la connexion: `curl http://localhost:4200/api/health`
             """.strip()
             
-            return error_msg, f"❌ Erreur: {str(e)}"
+            return error_msg, f"[ERROR] Erreur: {str(e)}"
     
     def trigger_workflow_action(self, workflow_type: str, **kwargs) -> Tuple[str, str]:
         """Déclencher une action de workflow"""
@@ -66,7 +66,7 @@ class OrchestrationInterface:
                 folder_path = kwargs.get('folder_path', './data/inbox')
                 api_key = kwargs.get('api_key', '')
                 if not api_key:
-                    return "❌ Clé API requise pour le traitement par lot", ""
+                    return "[ERROR] Clé API requise pour le traitement par lot", ""
                 result = loop.run_until_complete(
                     self.manager.trigger_batch_processing(folder_path, api_key)
                 )
@@ -75,12 +75,12 @@ class OrchestrationInterface:
             elif workflow_type == "smoke_tests":
                 api_key = kwargs.get('api_key', '')
                 if not api_key:
-                    return "❌ Clé API requise pour les tests", ""
+                    return "[ERROR] Clé API requise pour les tests", ""
                 result = loop.run_until_complete(
                     self.manager.trigger_smoke_tests(api_key)
                 )
             else:
-                return f"❌ Type de workflow inconnu: {workflow_type}", ""
+                return f"[ERROR] Type de workflow inconnu: {workflow_type}", ""
             
             loop.close()
             
@@ -89,7 +89,7 @@ class OrchestrationInterface:
                 self.current_runs[workflow_type] = run_id
                 
                 success_msg = f"""
-✅ **Workflow démarré avec succès**
+[OK] **Workflow démarré avec succès**
 
 **Type**: {workflow_type}
 **ID d'exécution**: {run_id}
@@ -101,10 +101,10 @@ Vous pouvez suivre l'exécution dans l'interface web Prefect ou actualiser le st
                 
                 return success_msg, run_id
             else:
-                return f"❌ Échec du démarrage: {result.get('message')}", ""
+                return f"[ERROR] Échec du démarrage: {result.get('message')}", ""
                 
         except Exception as e:
-            return f"❌ Erreur lors du déclenchement: {str(e)}", ""
+            return f"[ERROR] Erreur lors du déclenchement: {str(e)}", ""
     
     def check_workflow_status(self, run_id: str) -> str:
         """Vérifier le statut d'un workflow en cours"""
@@ -141,7 +141,7 @@ Vous pouvez suivre l'exécution dans l'interface web Prefect ou actualiser le st
             return status_msg
             
         except Exception as e:
-            return f"❌ Erreur vérification statut: {str(e)}"
+            return f"[ERROR] Erreur vérification statut: {str(e)}"
     
     def get_workflow_logs(self, run_id: str) -> str:
         """Récupérer les logs d'un workflow"""
@@ -167,14 +167,14 @@ Vous pouvez suivre l'exécution dans l'interface web Prefect ou actualiser le st
             return "\n".join(log_lines)
             
         except Exception as e:
-            return f"❌ Erreur récupération logs: {str(e)}"
+            return f"[ERROR] Erreur récupération logs: {str(e)}"
     
     def create_orchestration_tab(self) -> gr.Tab:
         """Créer l'onglet d'orchestration Prefect"""
         
-        with gr.Tab("🔄 Orchestration Prefect", id="orchestration") as tab:
+        with gr.Tab(" Orchestration Prefect", id="orchestration") as tab:
             gr.Markdown("""
-            ## 🚀 Gestion des Workflows Prefect
+            ##  Gestion des Workflows Prefect
             
             Contrôlez et surveillez vos workflows d'automatisation directement depuis l'interface.
             """)
@@ -182,7 +182,7 @@ Vous pouvez suivre l'exécution dans l'interface web Prefect ou actualiser le st
             # Section Statut
             with gr.Row():
                 with gr.Column(scale=2):
-                    gr.Markdown("### 📊 Statut du Système")
+                    gr.Markdown("###  Statut du Système")
                     
                     status_display = gr.Markdown(
                         value="Chargement du statut...",
@@ -190,7 +190,7 @@ Vous pouvez suivre l'exécution dans l'interface web Prefect ou actualiser le st
                     )
                     
                     with gr.Row():
-                        refresh_status_btn = gr.Button("🔄 Actualiser Statut", variant="secondary")
+                        refresh_status_btn = gr.Button(" Actualiser Statut", variant="secondary")
                         open_prefect_ui_btn = gr.Button("🌐 Interface Web Prefect", variant="primary")
                 
                 with gr.Column(scale=1):
@@ -203,16 +203,16 @@ Vous pouvez suivre l'exécution dans l'interface web Prefect ou actualiser le st
             
             # Section Actions Rapides
             with gr.Row():
-                gr.Markdown("### ⚡ Actions Rapides")
+                gr.Markdown("###  Actions Rapides")
             
             with gr.Row():
                 with gr.Column():
-                    health_check_btn = gr.Button("🩺 Vérification Santé", variant="primary", scale=1)
-                    maintenance_btn = gr.Button("🛠️ Maintenance DB", variant="secondary", scale=1)
+                    health_check_btn = gr.Button(" Vérification Santé", variant="primary", scale=1)
+                    maintenance_btn = gr.Button(" Maintenance DB", variant="secondary", scale=1)
                 
                 with gr.Column():
-                    smoke_test_btn = gr.Button("🧪 Tests Smoke", variant="primary", scale=1)
-                    batch_process_btn = gr.Button("📄 Traitement Batch", variant="secondary", scale=1)
+                    smoke_test_btn = gr.Button(" Tests Smoke", variant="primary", scale=1)
+                    batch_process_btn = gr.Button(" Traitement Batch", variant="secondary", scale=1)
                     
                 with gr.Column():
                     api_key_quick = gr.Textbox(
@@ -240,18 +240,18 @@ Vous pouvez suivre l'exécution dans l'interface web Prefect ou actualiser le st
             
             # Section Workflows Avancés
             with gr.Row():
-                gr.Markdown("### 🔧 Workflows Avancés")
+                gr.Markdown("###  Workflows Avancés")
             
             with gr.Row():
                 with gr.Column(scale=1):
                     workflow_selector = gr.Dropdown(
                         choices=[
-                            ("batch_processing", "📄 Traitement par lot"),
-                            ("health_check", "🩺 Vérification santé"),
-                            ("maintenance", "🛠️ Maintenance complète"),
-                            ("smoke_tests", "🧪 Tests smoke"),
-                            ("performance_monitoring", "📊 Surveillance performance"),
-                            ("cleanup_files", "🧹 Nettoyage fichiers")
+                            ("batch_processing", " Traitement par lot"),
+                            ("health_check", " Vérification santé"),
+                            ("maintenance", " Maintenance complète"),
+                            ("smoke_tests", " Tests smoke"),
+                            ("performance_monitoring", " Surveillance performance"),
+                            ("cleanup_files", " Nettoyage fichiers")
                         ],
                         label="Type de workflow",
                         value="health_check"
@@ -270,7 +270,7 @@ Vous pouvez suivre l'exécution dans l'interface web Prefect ou actualiser le st
                         visible=False
                     )
                     
-                    trigger_workflow_btn = gr.Button("🚀 Lancer Workflow", variant="primary")
+                    trigger_workflow_btn = gr.Button(" Lancer Workflow", variant="primary")
                 
                 with gr.Column(scale=1):
                     workflow_result = gr.Textbox(
@@ -281,7 +281,7 @@ Vous pouvez suivre l'exécution dans l'interface web Prefect ou actualiser le st
             
             # Section Surveillance
             with gr.Row():
-                gr.Markdown("### 👁️ Surveillance des Exécutions")
+                gr.Markdown("###  Surveillance des Exécutions")
             
             with gr.Row():
                 with gr.Column(scale=1):
@@ -292,8 +292,8 @@ Vous pouvez suivre l'exécution dans l'interface web Prefect ou actualiser le st
                     )
                     
                     with gr.Row():
-                        check_status_btn = gr.Button("📊 Vérifier Statut", variant="secondary")
-                        get_logs_btn = gr.Button("📋 Récupérer Logs", variant="secondary")
+                        check_status_btn = gr.Button(" Vérifier Statut", variant="secondary")
+                        get_logs_btn = gr.Button(" Récupérer Logs", variant="secondary")
                 
                 with gr.Column(scale=1):
                     run_status_display = gr.Textbox(

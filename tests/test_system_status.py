@@ -3,7 +3,7 @@
 Test du statut général du système DontREADME
 """
 
-print("🔍 ÉVALUATION FINALE DU SYSTÈME DONTREADME")
+print(" ÉVALUATION FINALE DU SYSTÈME DONTREADME")
 print("=" * 50)
 
 def test_imports():
@@ -13,52 +13,52 @@ def test_imports():
     # Composants de base
     try:
         from app.config import Config
-        results.append("✅ Configuration système")
+        results.append("[OK] Configuration système")
     except Exception as e:
-        results.append(f"❌ Configuration: {e}")
+        results.append(f"[ERROR] Configuration: {e}")
     
     try:
         from app.components.file_processor import FileProcessor
-        results.append("✅ Processeur de fichiers")
+        results.append("[OK] Processeur de fichiers")
     except Exception as e:
-        results.append(f"❌ Processeur de fichiers: {e}")
+        results.append(f"[ERROR] Processeur de fichiers: {e}")
     
     try:
         from utils.validators import FileValidator, InputValidator
-        results.append("✅ Validateurs")
+        results.append("[OK] Validateurs")
     except Exception as e:
-        results.append(f"❌ Validateurs: {e}")
+        results.append(f"[ERROR] Validateurs: {e}")
     
     try:
         from utils.performance import PerformanceMonitor
-        results.append("✅ Monitoring de performance")
+        results.append("[OK] Monitoring de performance")
     except Exception as e:
-        results.append(f"❌ Monitoring: {e}")
+        results.append(f"[ERROR] Monitoring: {e}")
     
     try:
         from utils.text_splitter import SmartTextSplitter
-        results.append("✅ Découpage intelligent de texte")
+        results.append("[OK] Découpage intelligent de texte")
     except Exception as e:
-        results.append(f"❌ Text splitter: {e}")
+        results.append(f"[ERROR] Text splitter: {e}")
     
     try:
         from utils.prompt_templates import PromptTemplateManager
-        results.append("✅ Gestionnaire de templates")
+        results.append("[OK] Gestionnaire de templates")
     except Exception as e:
-        results.append(f"❌ Templates: {e}")
+        results.append(f"[ERROR] Templates: {e}")
     
     # Orchestration (sans workflows)
     try:
         from app.orchestration_interface import orchestration_interface
-        results.append("✅ Interface d'orchestration")
+        results.append("[OK] Interface d'orchestration")
     except Exception as e:
-        results.append(f"❌ Interface orchestration: {e}")
+        results.append(f"[ERROR] Interface orchestration: {e}")
     
     try:
         from app.components.orchestration_manager import orchestration_manager
-        results.append("✅ Gestionnaire d'orchestration")
+        results.append("[OK] Gestionnaire d'orchestration")
     except Exception as e:
-        results.append(f"❌ Gestionnaire orchestration: {e}")
+        results.append(f"[ERROR] Gestionnaire orchestration: {e}")
     
     return results
 
@@ -83,9 +83,9 @@ def test_file_structure():
     results = []
     for file_path in critical_files:
         if os.path.exists(file_path):
-            results.append(f"✅ {file_path}")
+            results.append(f"[OK] {file_path}")
         else:
-            results.append(f"❌ {file_path} MANQUANT")
+            results.append(f"[ERROR] {file_path} MANQUANT")
     
     return results
 
@@ -97,23 +97,23 @@ def evaluate_system():
     for result in import_results:
         print(f"  {result}")
     
-    print("\n📁 STRUCTURE DES FICHIERS:")
+    print("\n STRUCTURE DES FICHIERS:")
     file_results = test_file_structure()
     for result in file_results[:10]:  # Premiers 10 pour la lisibilité
         print(f"  {result}")
     if len(file_results) > 10:
         remaining = len(file_results) - 10
-        passed_remaining = sum(1 for r in file_results[10:] if r.startswith("✅"))
+        passed_remaining = sum(1 for r in file_results[10:] if r.startswith("[OK]"))
         print(f"  ... et {passed_remaining}/{remaining} autres fichiers OK")
     
     # Calcul des scores
-    import_passed = sum(1 for r in import_results if r.startswith("✅"))
+    import_passed = sum(1 for r in import_results if r.startswith("[OK]"))
     import_total = len(import_results)
     
-    file_passed = sum(1 for r in file_results if r.startswith("✅"))
+    file_passed = sum(1 for r in file_results if r.startswith("[OK]"))
     file_total = len(file_results)
     
-    print(f"\n📊 SCORES:")
+    print(f"\n SCORES:")
     print(f"  Imports: {import_passed}/{import_total} ({import_passed/import_total*100:.1f}%)")
     print(f"  Fichiers: {file_passed}/{file_total} ({file_passed/file_total*100:.1f}%)")
     
@@ -122,18 +122,18 @@ def evaluate_system():
     
     # Évaluation finale
     if overall_score >= 90:
-        status = "🟢 EXCELLENT - Système prêt pour production"
+        status = " EXCELLENT - Système prêt pour production"
     elif overall_score >= 80:
-        status = "🟡 BON - Quelques ajustements mineurs"
+        status = " BON - Quelques ajustements mineurs"
     elif overall_score >= 70:
         status = "🟠 CORRECT - Améliorations nécessaires"
     else:
-        status = "🔴 PROBLÉMATIQUE - Corrections majeures requises"
+        status = " PROBLÉMATIQUE - Corrections majeures requises"
     
-    print(f"\n🎯 ÉVALUATION FINALE: {status}")
+    print(f"\n ÉVALUATION FINALE: {status}")
     
     # Problèmes identifiés
-    print(f"\n🔧 PROBLÈMES IDENTIFIÉS:")
+    print(f"\n PROBLÈMES IDENTIFIÉS:")
     if import_passed < import_total:
         print("  • Problème TensorFlow/Metal avec les embeddings")
         print("    -> Solution: Utiliser CPU ou autre backend d'embeddings")

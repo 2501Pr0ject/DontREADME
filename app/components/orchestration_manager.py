@@ -15,7 +15,7 @@ try:
     PREFECT_AVAILABLE = True
 except ImportError:
     PREFECT_AVAILABLE = False
-    print("⚠️ Prefect non disponible - Fonctions d'orchestration désactivées")
+    print("[WARN] Prefect non disponible - Fonctions d'orchestration désactivées")
 
 class OrchestrationManager:
     """Gestionnaire pour intégrer Prefect avec l'interface Gradio"""
@@ -53,7 +53,7 @@ class OrchestrationManager:
                 
                 return {
                     "status": "connected",
-                    "message": "✅ Serveur Prefect connecté",
+                    "message": "[OK] Serveur Prefect connecté",
                     "server_running": True,
                     "api_url": self.api_url,
                     "flows_count": len(flows),
@@ -81,7 +81,7 @@ class OrchestrationManager:
         except Exception as e:
             return {
                 "status": "error",
-                "message": f"❌ Erreur connexion Prefect: {str(e)}",
+                "message": f"[ERROR] Erreur connexion Prefect: {str(e)}",
                 "server_running": False,
                 "flows_count": 0,
                 "recent_runs": []
@@ -122,7 +122,7 @@ class OrchestrationManager:
                 
                 return {
                     "success": True,
-                    "message": f"✅ Workflow '{workflow_name}' démarré",
+                    "message": f"[OK] Workflow '{workflow_name}' démarré",
                     "run_id": str(flow_run.id),
                     "deployment_name": target_deployment.name
                 }
@@ -130,7 +130,7 @@ class OrchestrationManager:
         except Exception as e:
             return {
                 "success": False,
-                "message": f"❌ Erreur déclenchement: {str(e)}",
+                "message": f"[ERROR] Erreur déclenchement: {str(e)}",
                 "run_id": None
             }
     
@@ -170,7 +170,7 @@ class OrchestrationManager:
         """Formater le statut pour affichage dans Gradio"""
         if not status.get("server_running"):
             return f"""
-## 🔴 Orchestration Prefect - Hors ligne
+##  Orchestration Prefect - Hors ligne
 
 **Statut**: {status.get('message', 'Non connecté')}
 
@@ -182,20 +182,20 @@ class OrchestrationManager:
         
         flows_info = ""
         if status.get("flows"):
-            flows_info = "### 🔄 Workflows disponibles:\n"
+            flows_info = "###  Workflows disponibles:\n"
             for flow in status["flows"][:5]:
                 flows_info += f"- **{flow['name']}** (créé: {flow['created'][:10]})\n"
         
         recent_runs_info = ""
         if status.get("recent_runs"):
-            recent_runs_info = "### 📊 Exécutions récentes:\n"
+            recent_runs_info = "###  Exécutions récentes:\n"
             for run in status["recent_runs"][:3]:
                 state_emoji = self._get_state_emoji(run['state'])
                 duration_str = f" ({run['duration']:.1f}s)" if run['duration'] else ""
                 recent_runs_info += f"- {state_emoji} **{run['name']}** - {run['state']}{duration_str}\n"
         
         return f"""
-## 🟢 Orchestration Prefect - En ligne
+##  Orchestration Prefect - En ligne
 
 **Serveur**: {status.get('api_url', 'localhost:4200')}
 **Workflows**: {status.get('flows_count', 0)} disponibles
@@ -210,11 +210,11 @@ class OrchestrationManager:
     def _get_state_emoji(self, state: str) -> str:
         """Retourner l'emoji correspondant à l'état"""
         state_emojis = {
-            "COMPLETED": "✅",
-            "RUNNING": "🏃",
-            "PENDING": "⏳",
-            "FAILED": "❌",
-            "CANCELLED": "⚠️",
+            "COMPLETED": "[OK]",
+            "RUNNING": "",
+            "PENDING": "",
+            "FAILED": "[ERROR]",
+            "CANCELLED": "[WARN]",
             "CRASHED": "💥"
         }
         return state_emojis.get(state, "❓")
@@ -222,12 +222,12 @@ class OrchestrationManager:
     def get_available_workflows(self) -> List[Tuple[str, str]]:
         """Retourner la liste des workflows disponibles pour l'interface"""
         workflows = [
-            ("health_check", "🩺 Vérification santé système"),
-            ("batch_processing", "📄 Traitement par lot de documents"),
-            ("database_maintenance", "🛠️ Maintenance base de données"),
-            ("performance_monitoring", "📊 Surveillance performance"),
-            ("smoke_tests", "🧪 Tests smoke"),
-            ("cleanup_files", "🧹 Nettoyage fichiers anciens"),
+            ("health_check", " Vérification santé système"),
+            ("batch_processing", " Traitement par lot de documents"),
+            ("database_maintenance", " Maintenance base de données"),
+            ("performance_monitoring", " Surveillance performance"),
+            ("smoke_tests", " Tests smoke"),
+            ("cleanup_files", " Nettoyage fichiers anciens"),
             ("weekly_maintenance", "📅 Maintenance hebdomadaire"),
             ("automated_tests", "🔬 Tests automatisés complets")
         ]

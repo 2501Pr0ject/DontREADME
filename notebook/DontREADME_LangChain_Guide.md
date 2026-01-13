@@ -1,8 +1,8 @@
-# 🤖 DontREADME - Guide LangChain & RAG
+#  DontREADME - Guide LangChain & RAG
 
 > *Document technique centré sur l'architecture LangChain, la base vectorielle et les patterns RAG*
 
-## 🏗️ Architecture LangChain
+##  Architecture LangChain
 
 ### Vue d'Ensemble RAG (Retrieval-Augmented Generation)
 
@@ -23,7 +23,7 @@ graph TD
     E --> H
 ```
 
-## 🔧 Composants LangChain Utilisés
+##  Composants LangChain Utilisés
 
 ### 1. **Embeddings & Vector Store**
 
@@ -200,7 +200,7 @@ class EnhancedChatEngine:
         return result["answer"], sources, response_metadata
 ```
 
-## 🗄️ Base Vectorielle ChromaDB
+##  Base Vectorielle ChromaDB
 
 ### Configuration Avancée
 
@@ -292,7 +292,7 @@ def _filter_complex_metadata(self, documents):
     return filtered_docs
 ```
 
-## 🤖 Patterns d'Agents (Non Implémentés)
+##  Patterns d'Agents (Non Implémentés)
 
 > *Note: DontREADME utilise une approche RAG classique, mais voici comment intégrer des agents*
 
@@ -388,7 +388,7 @@ class DocumentTools:
         )
 ```
 
-## 📊 Métriques et Monitoring
+##  Métriques et Monitoring
 
 ### Performance RAG
 
@@ -424,7 +424,7 @@ class RAGMetrics:
         }
 ```
 
-## 🎯 Optimisations Implémentées
+##  Optimisations Implémentées
 
 ### 1. **Chunking Adaptatif**
 - Séparateurs optimisés par type de document
@@ -446,7 +446,7 @@ class RAGMetrics:
 - Historique contextuel pour la conversation
 - Gestion des métadonnées de session
 
-## 🔮 Extensions Futures Possibles
+##  Extensions Futures Possibles
 
 ### LangGraph Integration
 ```python
@@ -484,16 +484,16 @@ class HybridRetriever:
 
 ---
 
-## 📝 Conclusion Technique
+##  Conclusion Technique
 
 **DontREADME** implémente un **RAG moderne et robuste** avec LangChain, centré sur :
 
-✅ **Architecture modulaire** avec composants spécialisés  
-✅ **Embeddings adaptatifs** via API externe  
-✅ **Chunking intelligent** selon le contexte  
-✅ **Templates optimisés** par domaine  
-✅ **Base vectorielle persistante** ChromaDB  
-✅ **Monitoring intégré** des performances  
+[OK] **Architecture modulaire** avec composants spécialisés  
+[OK] **Embeddings adaptatifs** via API externe  
+[OK] **Chunking intelligent** selon le contexte  
+[OK] **Templates optimisés** par domaine  
+[OK] **Base vectorielle persistante** ChromaDB  
+[OK] **Monitoring intégré** des performances  
 
 Le système est **prêt pour extensions** vers des architectures d'agents plus complexes avec LangGraph, tout en maintenant une base RAG solide et performante.
 

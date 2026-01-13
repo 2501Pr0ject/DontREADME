@@ -12,10 +12,10 @@ def check_prefect_installation():
     """Vérifier si Prefect est installé"""
     try:
         import prefect
-        print(f"✅ Prefect installé - version: {prefect.__version__}")
+        print(f"[OK] Prefect installé - version: {prefect.__version__}")
         return True
     except ImportError:
-        print("❌ Prefect non installé")
+        print("[ERROR] Prefect non installé")
         return False
 
 def install_prefect():
@@ -34,10 +34,10 @@ def install_prefect():
             print(f"   Installation de {package}...")
             subprocess.check_call([sys.executable, "-m", "pip", "install", package])
         
-        print("✅ Installation Prefect terminée")
+        print("[OK] Installation Prefect terminée")
         return True
     except subprocess.CalledProcessError as e:
-        print(f"❌ Erreur installation: {e}")
+        print(f"[ERROR] Erreur installation: {e}")
         return False
 
 def create_directories():
@@ -53,10 +53,10 @@ def create_directories():
         "./logs"
     ]
     
-    print("📁 Création des répertoires...")
+    print(" Création des répertoires...")
     for directory in directories:
         Path(directory).mkdir(parents=True, exist_ok=True)
-        print(f"   ✅ {directory}")
+        print(f"   [OK] {directory}")
 
 def create_test_documents():
     """Créer des documents de test pour les workflows"""
@@ -97,34 +97,34 @@ Recommandations:
     test_file = test_dir / "test_document.txt"
     if not test_file.exists():
         test_file.write_text(test_content, encoding='utf-8')
-        print(f"✅ Document de test créé: {test_file}")
+        print(f"[OK] Document de test créé: {test_file}")
 
 def check_environment():
     """Vérifier l'environnement"""
-    print("🔍 Vérification de l'environnement...")
+    print(" Vérification de l'environnement...")
     
     # Vérifier Python
     python_version = sys.version_info
     if python_version < (3, 8):
-        print(f"❌ Python {python_version.major}.{python_version.minor} - Version 3.8+ requise")
+        print(f"[ERROR] Python {python_version.major}.{python_version.minor} - Version 3.8+ requise")
         return False
     else:
-        print(f"✅ Python {python_version.major}.{python_version.minor}")
+        print(f"[OK] Python {python_version.major}.{python_version.minor}")
     
     # Vérifier les modules DontREADME
     try:
         sys.path.append(str(Path.cwd()))
         from app.config import Config
-        print("✅ Modules DontREADME disponibles")
+        print("[OK] Modules DontREADME disponibles")
     except ImportError as e:
-        print(f"❌ Erreur import DontREADME: {e}")
+        print(f"[ERROR] Erreur import DontREADME: {e}")
         return False
     
     return True
 
 def setup_prefect_config():
     """Configurer Prefect"""
-    print("⚙️ Configuration de Prefect...")
+    print(" Configuration de Prefect...")
     
     # Définir les variables d'environnement
     os.environ["PREFECT_API_DATABASE_CONNECTION_URL"] = f"sqlite+aiosqlite:///{Path.cwd()}/data/prefect.db"
@@ -147,15 +147,15 @@ def setup_prefect_config():
                 # Continuer même si la commande échoue (config peut déjà exister)
                 pass
         
-        print("✅ Configuration Prefect terminée")
+        print("[OK] Configuration Prefect terminée")
         return True
     except Exception as e:
-        print(f"⚠️ Configuration partielle: {e}")
+        print(f"[WARN] Configuration partielle: {e}")
         return True  # Continue même si config partielle
 
 def test_workflows_import():
     """Tester l'import des workflows"""
-    print("🧪 Test d'import des workflows...")
+    print(" Test d'import des workflows...")
     
     try:
         sys.path.append(str(Path.cwd()))
@@ -166,10 +166,10 @@ def test_workflows_import():
         from workflows.monitoring import health_check_flow
         from workflows.testing import smoke_testing_flow
         
-        print("✅ Workflows importés avec succès")
+        print("[OK] Workflows importés avec succès")
         return True
     except ImportError as e:
-        print(f"❌ Erreur import workflows: {e}")
+        print(f"[ERROR] Erreur import workflows: {e}")
         return False
 
 def create_startup_info():
@@ -218,21 +218,21 @@ export PREFECT_API_URL="http://localhost:4200/api"
     
     info_file = Path("./ORCHESTRATION_INFO.md")
     info_file.write_text(info_content, encoding='utf-8')
-    print(f"✅ Informations sauvegardées: {info_file}")
+    print(f"[OK] Informations sauvegardées: {info_file}")
 
 def main():
     """Fonction principale"""
-    print("🚀 Configuration de l'orchestration Prefect pour DontREADME\n")
+    print(" Configuration de l'orchestration Prefect pour DontREADME\n")
     
     # Étape 1: Vérifier l'environnement
     if not check_environment():
-        print("❌ Environnement non compatible")
+        print("[ERROR] Environnement non compatible")
         sys.exit(1)
     
     # Étape 2: Installer Prefect si nécessaire
     if not check_prefect_installation():
         if not install_prefect():
-            print("❌ Échec installation Prefect")
+            print("[ERROR] Échec installation Prefect")
             sys.exit(1)
     
     # Étape 3: Créer les répertoires
@@ -246,13 +246,13 @@ def main():
     
     # Étape 6: Tester les imports
     if not test_workflows_import():
-        print("⚠️ Workflows non disponibles - installation partielle")
+        print("[WARN] Workflows non disponibles - installation partielle")
     
     # Étape 7: Créer les informations
     create_startup_info()
     
-    print("\n🎉 Configuration terminée!")
-    print("\n📋 Prochaines étapes:")
+    print("\n Configuration terminée!")
+    print("\n Prochaines étapes:")
     print("1. Définir votre clé API: export MISTRAL_API_KEY='votre_cle'")
     print("2. Démarrer Prefect: ./scripts/start_prefect.sh")
     print("3. Lancer l'application: python app/main.py")

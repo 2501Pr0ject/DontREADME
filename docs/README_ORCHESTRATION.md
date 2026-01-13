@@ -1,35 +1,35 @@
-# 🔄 Interface d'Orchestration Prefect pour DontREADME
+#  Interface d'Orchestration Prefect pour DontREADME
 
-## 🎯 Vue d'ensemble
+##  Vue d'ensemble
 
 L'interface d'orchestration Prefect est maintenant **intégrée directement dans Gradio** ! Plus besoin de jongler entre plusieurs interfaces - tout est accessible depuis l'application DontREADME.
 
-## ✨ Fonctionnalités de l'Interface
+##  Fonctionnalités de l'Interface
 
-### 📊 Tableau de Bord en Temps Réel
+###  Tableau de Bord en Temps Réel
 - **Statut du serveur Prefect** avec détection automatique
 - **Liste des workflows disponibles** avec informations de création
 - **Historique des exécutions récentes** avec états et durées
 - **Métriques de connexion** et diagnostic automatique
 
-### ⚡ Actions Rapides (Un Clic)
-- **🩺 Vérification Santé** - Diagnostic complet du système
-- **🛠️ Maintenance DB** - Sauvegarde et optimisation ChromaDB
-- **🧪 Tests Smoke** - Tests rapides de fonctionnement
-- **📄 Traitement Batch** - Traitement automatisé de documents
+###  Actions Rapides (Un Clic)
+- ** Vérification Santé** - Diagnostic complet du système
+- ** Maintenance DB** - Sauvegarde et optimisation ChromaDB
+- ** Tests Smoke** - Tests rapides de fonctionnement
+- ** Traitement Batch** - Traitement automatisé de documents
 
-### 🔧 Workflows Avancés
+###  Workflows Avancés
 - **Interface de paramétrage dynamique** selon le type de workflow
 - **Exécution avec suivi en temps réel** des statuts
 - **Récupération automatique des résultats** formatés
 - **Gestion des erreurs** avec recommandations
 
-### 👁️ Surveillance des Exécutions
+###  Surveillance des Exécutions
 - **Suivi en temps réel** de n'importe quel workflow
 - **Récupération des logs** avec interface dédiée
 - **Historique des performances** et métriques
 
-## 🚀 Installation et Configuration
+##  Installation et Configuration
 
 ### 1. Configuration Automatique
 ```bash
@@ -54,11 +54,11 @@ python app/main.py
 export MISTRAL_API_KEY="votre_cle_api_mistral"
 ```
 
-## 🎮 Guide d'Utilisation
+##  Guide d'Utilisation
 
 ### Accès à l'Interface
 1. Lancer l'application DontREADME
-2. Ouvrir l'onglet **"🔄 Orchestration Prefect"**
+2. Ouvrir l'onglet **" Orchestration Prefect"**
 3. L'interface se connecte automatiquement au serveur Prefect
 
 ### Actions Rapides
@@ -70,14 +70,14 @@ export MISTRAL_API_KEY="votre_cle_api_mistral"
 1. Sélectionner le type de workflow dans la liste déroulante
 2. Les paramètres s'affichent dynamiquement
 3. Remplir les champs nécessaires
-4. Cliquer "🚀 Lancer Workflow"
+4. Cliquer " Lancer Workflow"
 
 ### Surveillance
 1. L'ID d'exécution s'affiche automatiquement après lancement
-2. Utiliser "📊 Vérifier Statut" pour le suivi
-3. "📋 Récupérer Logs" pour voir les détails
+2. Utiliser " Vérifier Statut" pour le suivi
+3. " Récupérer Logs" pour voir les détails
 
-## 🔧 Architecture Technique
+##  Architecture Technique
 
 ### Composants Principaux
 
@@ -115,33 +115,33 @@ Application Gradio → PrefectBridge → Workflows Python
 - **Avantages** : Simplicité, pas de serveur requis
 - **Usage** : Développement, tests ponctuels
 
-## 📋 Types de Workflows Disponibles
+##  Types de Workflows Disponibles
 
-### 🩺 Vérification Santé
+###  Vérification Santé
 - **CPU, Mémoire, Disque** : Métriques système
 - **ChromaDB** : État et accessibilité
 - **Répertoires** : Existence et permissions
 - **Score global** : Évaluation 0-100
 
-### 📄 Traitement par Lot
+###  Traitement par Lot
 - **Documents multiples** : PDF, DOCX, TXT
 - **Traitement parallèle** : Jusqu'à 3 documents simultanés
 - **Rapport détaillé** : Statistiques et métriques
 - **Gestion d'erreurs** : Robustesse et retry
 
-### 🛠️ Maintenance Base de Données
+###  Maintenance Base de Données
 - **Sauvegarde** : Copie complète ChromaDB
 - **Optimisation** : Collections et performances
 - **Nettoyage** : Suppression données anciennes
 - **Métriques** : Espace libéré et améliorations
 
-### 🧪 Tests Smoke
+###  Tests Smoke
 - **Tests de base** : Fonctionnement essentiel
 - **Validation API** : Tests avec clé Mistral
 - **Performance** : Temps de réponse
 - **Robustesse** : Gestion d'erreurs
 
-## 🎨 Interface Utilisateur
+##  Interface Utilisateur
 
 ### Design et Ergonomie
 - **Layout responsive** : Adaptation à la taille d'écran
@@ -151,55 +151,55 @@ Application Gradio → PrefectBridge → Workflows Python
 
 ### Sections de l'Interface
 
-#### 📊 Statut du Système
+####  Statut du Système
 ```
-🟢 Orchestration Prefect - En ligne
+ Orchestration Prefect - En ligne
 Serveur: http://localhost:4200/api
 Workflows: 8 disponibles
 
-🔄 Workflows disponibles:
+ Workflows disponibles:
 - batch_document_flow (créé: 2025-06-12)
 - health_check_flow (créé: 2025-06-12)
 ...
 
-📊 Exécutions récentes:
-- ✅ health-check-20250612 - COMPLETED (2.3s)
-- 🏃 batch-processing-20250612 - RUNNING
+ Exécutions récentes:
+- [OK] health-check-20250612 - COMPLETED (2.3s)
+-  batch-processing-20250612 - RUNNING
 ...
 ```
 
-#### ⚡ Actions Rapides
+####  Actions Rapides
 ```
-[🩺 Vérification Santé] [🛠️ Maintenance DB]
-[🧪 Tests Smoke]        [📄 Traitement Batch]
+[ Vérification Santé] [ Maintenance DB]
+[ Tests Smoke]        [ Traitement Batch]
 
 Clé API: [************]
 Dossier: [./data/inbox]
 ```
 
-#### 🔧 Workflows Avancés
+####  Workflows Avancés
 ```
-Type: [📄 Traitement par lot        ▼]
+Type: [ Traitement par lot        ▼]
 
 Paramètres dynamiques:
 Dossier à traiter: [./data/inbox        ]
 Clé API Mistral:   [************       ]
 
-[🚀 Lancer Workflow]
+[ Lancer Workflow]
 ```
 
-#### 👁️ Surveillance
+####  Surveillance
 ```
 ID d'exécution: [abcd-1234-efgh-5678]
 
-[📊 Vérifier Statut] [📋 Récupérer Logs]
+[ Vérifier Statut] [ Récupérer Logs]
 
-Status: ✅ COMPLETED
+Status: [OK] COMPLETED
 Flow: batch_document_flow  
 Durée: 45.2 secondes
 ```
 
-## 🔍 Monitoring et Observabilité
+##  Monitoring et Observabilité
 
 ### Métriques Collectées
 - **Temps d'exécution** : Durée des workflows
@@ -219,7 +219,7 @@ Durée: 45.2 secondes
 - **Interface visuelle** : Codes couleur et icônes
 - **Messages explicites** : Actions recommandées
 
-## 🛡️ Gestion d'Erreurs
+##  Gestion d'Erreurs
 
 ### Types d'Erreurs Gérées
 1. **Serveur Prefect indisponible** : Fallback vers mode direct
@@ -229,7 +229,7 @@ Durée: 45.2 secondes
 
 ### Messages d'Erreur Types
 ```
-❌ Échec de Traitement par lot
+[ERROR] Échec de Traitement par lot
 
 Erreur: Clé API Mistral invalide
 
@@ -239,7 +239,7 @@ Actions recommandées:
 - Consulter les logs pour plus de détails
 ```
 
-## 🔄 Intégration avec DontREADME
+##  Intégration avec DontREADME
 
 ### Workflow Complet
 1. **Traitement document** dans l'onglet Configuration
@@ -253,7 +253,7 @@ Actions recommandées:
 - **Cache partagé** : Embeddings et réponses
 - **Logs centralisés** : Débogage facilité
 
-## 🚀 Optimisations et Performance
+##  Optimisations et Performance
 
 ### Exécution Asynchrone
 - **Workflows non-bloquants** : Interface reste réactive
@@ -267,11 +267,11 @@ Actions recommandées:
 - **Queue intelligente** : Priorisation des tâches
 - **Retry exponential** : Résilience aux erreurs temporaires
 
-## 📈 Métriques et Analytics
+##  Métriques et Analytics
 
 ### Dashboard en Temps Réel
 ```
-📊 Statistiques d'Orchestration
+ Statistiques d'Orchestration
 
 Aujourd'hui:
 - Workflows exécutés: 24
@@ -292,7 +292,7 @@ Cette semaine:
 - **Prédiction de charge** : Anticipation des besoins
 - **Optimisation suggérée** : Recommandations automatiques
 
-## 🎯 Bonnes Pratiques
+##  Bonnes Pratiques
 
 ### Utilisation Quotidienne
 1. **Vérification santé matinale** : Diagnostic avant utilisation
@@ -317,15 +317,15 @@ export MAX_WORKERS="3"
 
 ---
 
-## 🎉 Conclusion
+##  Conclusion
 
 L'interface d'orchestration Prefect transforme DontREADME en une **plateforme complète et autonome**. Plus besoin de compétences techniques avancées - tout est accessible en quelques clics depuis l'interface familière de Gradio.
 
 **Bénéfices immédiats :**
-- ⚡ **Simplicité** : Actions en un clic
-- 🔍 **Visibilité** : Statuts en temps réel  
-- 🛡️ **Robustesse** : Gestion d'erreurs intégrée
-- 📊 **Observabilité** : Métriques complètes
+-  **Simplicité** : Actions en un clic
+-  **Visibilité** : Statuts en temps réel  
+-  **Robustesse** : Gestion d'erreurs intégrée
+-  **Observabilité** : Métriques complètes
 
 **Impact sur l'expérience utilisateur :**
 - Transformation d'un outil technique en interface accessible
@@ -333,4 +333,4 @@ L'interface d'orchestration Prefect transforme DontREADME en une **plateforme co
 - Feedback immédiat et actionnable
 - Intégration transparente avec les fonctionnalités existantes
 
-**L'orchestration n'a jamais été aussi simple ! 🚀**
+**L'orchestration n'a jamais été aussi simple ! **

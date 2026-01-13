@@ -1,25 +1,25 @@
-# 🔧 Guide Développeur DontREADME
+#  Guide Développeur DontREADME
 
 > **Documentation technique complète pour comprendre, modifier et étendre DontREADME**
 
 Ce guide explique en détail l'architecture, les composants, et le fonctionnement interne de DontREADME. Idéal pour les développeurs souhaitant comprendre, modifier ou étendre le système.
 
-## 📁 Architecture du Projet
+##  Architecture du Projet
 
 ### Vue d'Ensemble
 ```
 DontREADME/
 ├── 📱 app/                    # Application principale
-├── 🔧 utils/                  # Utilitaires avancés
-├── 🔄 workflows/              # Orchestration Prefect
-├── 📝 scripts/                # Scripts d'automatisation
-├── 📊 data/                   # Données et stockage
-├── 🧪 tests/                  # Tests (structure préparée)
-├── 📋 logs/                   # Logs système
+├──  utils/                  # Utilitaires avancés
+├──  workflows/              # Orchestration Prefect
+├──  scripts/                # Scripts d'automatisation
+├──  data/                   # Données et stockage
+├──  tests/                  # Tests (structure préparée)
+├──  logs/                   # Logs système
 └── 📚 docs/                   # Documentation
 ```
 
-## 🏗️ Structure Détaillée
+##  Structure Détaillée
 
 ### 📱 **Dossier `app/` - Application Principale**
 
@@ -207,7 +207,7 @@ class OrchestrationInterface:
         """Créer l'onglet d'orchestration Prefect"""
 ```
 
-### 🔧 **Dossier `utils/` - Utilitaires Avancés**
+###  **Dossier `utils/` - Utilitaires Avancés**
 
 #### `validators.py` - Validation et Sécurité
 **Rôle** : Validation complète des entrées utilisateur
@@ -306,7 +306,7 @@ class PromptTemplateManager:
         """Personnalisation de template"""
 ```
 
-### 🔄 **Dossier `workflows/` - Orchestration Prefect**
+###  **Dossier `workflows/` - Orchestration Prefect**
 
 #### `tasks.py` - Tâches Réutilisables
 **Rôle** : Bibliothèque de tâches Prefect atomiques
@@ -414,7 +414,7 @@ weekly_maintenance_deployment = Deployment.build_from_flow(
 )
 ```
 
-### 📝 **Dossier `scripts/` - Scripts d'Automatisation**
+###  **Dossier `scripts/` - Scripts d'Automatisation**
 
 #### `setup_orchestration.py` - Configuration Automatique
 **Rôle** : Installation et configuration complète automatisée
@@ -460,7 +460,7 @@ def test_workflows_import():
 # Libération ports
 ```
 
-### 📊 **Dossier `data/` - Stockage et Données**
+###  **Dossier `data/` - Stockage et Données**
 
 #### Structure de Stockage
 ```
@@ -480,7 +480,7 @@ data/
 └── prefect_storage/      # Artefacts Prefect
 ```
 
-## 🔧 Flux de Données Détaillés
+##  Flux de Données Détaillés
 
 ### 1. **Traitement de Document**
 ```
@@ -507,7 +507,7 @@ System Metrics → PerformanceMonitor → Health Calculation →
 Alert Evaluation → Notification Trigger → Dashboard Update
 ```
 
-## 🎛️ Points d'Extension
+##  Points d'Extension
 
 ### Ajouter un Nouveau Format de Document
 1. **Étendre FileProcessor**
@@ -567,7 +567,7 @@ async def trigger_custom_workflow(self, param1, param2):
 3. **Intégrer à l'Interface**
 ```python
 # Dans OrchestrationInterface
-custom_btn = gr.Button("🔧 Custom Workflow")
+custom_btn = gr.Button(" Custom Workflow")
 custom_btn.click(
     fn=prefect_bridge.custom_workflow_sync,
     inputs=[param1_input, param2_input],
@@ -575,7 +575,7 @@ custom_btn.click(
 )
 ```
 
-## 🔍 Debugging et Développement
+##  Debugging et Développement
 
 ### Variables d'Environnement de Debug
 ```bash
@@ -603,7 +603,7 @@ from workflows.tasks import check_system_health
 health = check_system_health()
 ```
 
-## 🚀 Déploiement en Production
+##  Déploiement en Production
 
 ### Configuration Production
 ```python
@@ -631,7 +631,7 @@ export BACKUP_RETENTION_DAYS="30"
 - **Alertes** : PagerDuty/Slack integration
 - **Health Checks** : Kubernetes liveness/readiness probes
 
-## 📋 Checklist Développement
+##  Checklist Développement
 
 ### Avant Modification
 - [ ] Lire cette documentation complètement
@@ -655,19 +655,19 @@ export BACKUP_RETENTION_DAYS="30"
 
 ---
 
-## 🎯 Conclusion Technique
+##  Conclusion Technique
 
 DontREADME est conçu avec une **architecture modulaire et extensible** qui permet :
 
-✅ **Facilité de maintenance** : Composants isolés et responsabilités claires
-✅ **Extensibilité** : Points d'extension bien définis
-✅ **Observabilité** : Monitoring et logging complets
-✅ **Robustesse** : Gestion d'erreurs et fallbacks
-✅ **Performance** : Optimisations et mise en cache
+[OK] **Facilité de maintenance** : Composants isolés et responsabilités claires
+[OK] **Extensibilité** : Points d'extension bien définis
+[OK] **Observabilité** : Monitoring et logging complets
+[OK] **Robustesse** : Gestion d'erreurs et fallbacks
+[OK] **Performance** : Optimisations et mise en cache
 
 Le système est prêt pour la production et peut évoluer selon vos besoins spécifiques !
 
 ---
 
 *Guide développeur DontREADME - Version 1.0*  
-*Développé avec ❤️ et Claude Sonnet 4*
+*Développé avec  et Claude Sonnet 4*

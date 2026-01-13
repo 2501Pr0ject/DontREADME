@@ -40,7 +40,7 @@ async def automated_testing_flow(
     """
     logger = get_run_logger()
     
-    logger.info("🧪 Démarrage des tests automatisés")
+    logger.info(" Démarrage des tests automatisés")
     testing_start = datetime.now()
     
     try:
@@ -51,12 +51,12 @@ async def automated_testing_flow(
         }
         
         # Suite 1: Tests de santé système
-        logger.info("🩺 Suite 1: Tests de santé système")
+        logger.info(" Suite 1: Tests de santé système")
         health_tests = await run_health_tests()
         test_results["test_suites"]["health"] = health_tests
         
         # Suite 2: Tests de traitement de documents
-        logger.info("📄 Suite 2: Tests de traitement de documents")
+        logger.info(" Suite 2: Tests de traitement de documents")
         document_tests = await run_document_processing_tests(
             api_key, 
             test_documents_folder
@@ -64,17 +64,17 @@ async def automated_testing_flow(
         test_results["test_suites"]["document_processing"] = document_tests
         
         # Suite 3: Tests de requêtes et réponses
-        logger.info("💬 Suite 3: Tests de requêtes et réponses")
+        logger.info(" Suite 3: Tests de requêtes et réponses")
         query_tests = await run_query_response_tests(api_key)
         test_results["test_suites"]["query_response"] = query_tests
         
         # Suite 4: Tests de performance
-        logger.info("⚡ Suite 4: Tests de performance")
+        logger.info(" Suite 4: Tests de performance")
         performance_tests = await run_performance_tests(api_key)
         test_results["test_suites"]["performance"] = performance_tests
         
         # Suite 5: Tests de robustesse
-        logger.info("🛡️ Suite 5: Tests de robustesse")
+        logger.info(" Suite 5: Tests de robustesse")
         robustness_tests = await run_robustness_tests(api_key)
         test_results["test_suites"]["robustness"] = robustness_tests
         
@@ -128,10 +128,10 @@ async def automated_testing_flow(
         
         test_results["overall_status"] = overall_status
         
-        logger.info(f"🧪 Tests automatisés terminés:")
-        logger.info(f"   📊 {passed_tests}/{total_tests} tests réussis ({success_rate:.1f}%)")
-        logger.info(f"   ⏱️ Durée: {testing_duration:.1f}s")
-        logger.info(f"   🎯 Statut: {overall_status.upper()}")
+        logger.info(f" Tests automatisés terminés:")
+        logger.info(f"    {passed_tests}/{total_tests} tests réussis ({success_rate:.1f}%)")
+        logger.info(f"    Durée: {testing_duration:.1f}s")
+        logger.info(f"    Statut: {overall_status.upper()}")
         
         return test_results
         
@@ -139,7 +139,7 @@ async def automated_testing_flow(
         testing_end = datetime.now()
         testing_duration = (testing_end - testing_start).total_seconds()
         
-        logger.error(f"❌ Erreur lors des tests automatisés: {str(e)}")
+        logger.error(f"[ERROR] Erreur lors des tests automatisés: {str(e)}")
         return {
             "status": "error",
             "started_at": testing_start.isoformat(),
@@ -172,7 +172,7 @@ async def regression_testing_flow(
     """
     logger = get_run_logger()
     
-    logger.info("🔄 Tests de régression")
+    logger.info(" Tests de régression")
     regression_start = datetime.now()
     
     try:
@@ -206,15 +206,15 @@ async def regression_testing_flow(
         # Déterminer l'action recommandée
         if regression_analysis.get("has_regression", False):
             regression_summary["recommendation"] = "investigate_changes"
-            logger.warning("⚠️ Régression détectée - investigation nécessaire")
+            logger.warning("[WARN] Régression détectée - investigation nécessaire")
         else:
             regression_summary["recommendation"] = "changes_ok"
-            logger.info("✅ Aucune régression détectée")
+            logger.info("[OK] Aucune régression détectée")
         
         return regression_summary
         
     except Exception as e:
-        logger.error(f"❌ Erreur tests de régression: {str(e)}")
+        logger.error(f"[ERROR] Erreur tests de régression: {str(e)}")
         return {
             "status": "error",
             "started_at": regression_start.isoformat(),
@@ -253,7 +253,7 @@ async def smoke_testing_flow(api_key: str) -> Dict[str, Any]:
         }
         
         # Test 1: Santé système
-        logger.info("🩺 Test 1: Santé système")
+        logger.info(" Test 1: Santé système")
         health_result = check_system_health()
         smoke_results["tests"].append({
             "name": "system_health",
@@ -263,12 +263,12 @@ async def smoke_testing_flow(api_key: str) -> Dict[str, Any]:
         })
         
         # Test 2: Création d'un document de test
-        logger.info("📄 Test 2: Traitement document basique")
+        logger.info(" Test 2: Traitement document basique")
         test_doc_result = await test_basic_document_processing(api_key)
         smoke_results["tests"].append(test_doc_result)
         
         # Test 3: Requête basique
-        logger.info("💬 Test 3: Requête basique")
+        logger.info(" Test 3: Requête basique")
         test_query_result = await test_basic_query(api_key)
         smoke_results["tests"].append(test_query_result)
         
@@ -290,14 +290,14 @@ async def smoke_testing_flow(api_key: str) -> Dict[str, Any]:
         })
         
         logger.info(f"💨 Tests smoke terminés:")
-        logger.info(f"   📊 {passed_tests}/{total_tests} tests réussis")
-        logger.info(f"   ⏱️ Durée: {smoke_duration:.1f}s")
-        logger.info(f"   ✅ Système: {'OK' if smoke_results['all_tests_passed'] else 'KO'}")
+        logger.info(f"    {passed_tests}/{total_tests} tests réussis")
+        logger.info(f"    Durée: {smoke_duration:.1f}s")
+        logger.info(f"   [OK] Système: {'OK' if smoke_results['all_tests_passed'] else 'KO'}")
         
         return smoke_results
         
     except Exception as e:
-        logger.error(f"❌ Erreur tests smoke: {str(e)}")
+        logger.error(f"[ERROR] Erreur tests smoke: {str(e)}")
         return {
             "status": "error",
             "started_at": smoke_start.isoformat(),

@@ -10,22 +10,22 @@ from pathlib import Path
 def print_banner():
     """Afficher la bannière de démonstration"""
     print("=" * 60)
-    print("🤖 DÉMONSTRATION DONTREADME")
+    print(" DÉMONSTRATION DONTREADME")
     print("=" * 60)
     print("Plateforme d'Analyse Documentaire Intelligente")
-    print("Développé avec ❤️ et Claude Sonnet 4")
+    print("Développé avec  et Claude Sonnet 4")
     print("=" * 60)
 
 def check_environment():
     """Vérifier l'environnement de démonstration"""
-    print("\n🔍 Vérification de l'environnement...")
+    print("\n Vérification de l'environnement...")
     
     # Vérifier Python
     python_version = sys.version_info
     if python_version >= (3, 8):
-        print(f"✅ Python {python_version.major}.{python_version.minor}")
+        print(f"[OK] Python {python_version.major}.{python_version.minor}")
     else:
-        print(f"❌ Python {python_version.major}.{python_version.minor} - Version 3.8+ requise")
+        print(f"[ERROR] Python {python_version.major}.{python_version.minor} - Version 3.8+ requise")
         return False
     
     # Vérifier les modules critiques
@@ -41,16 +41,16 @@ def check_environment():
     for module, description in modules:
         try:
             __import__(module)
-            print(f"✅ {module} - {description}")
+            print(f"[OK] {module} - {description}")
         except ImportError:
-            print(f"❌ {module} - {description} (pip install {module})")
+            print(f"[ERROR] {module} - {description} (pip install {module})")
             all_good = False
     
     return all_good
 
 def check_system_components():
     """Vérifier les composants système"""
-    print("\n🔧 Vérification des composants...")
+    print("\n Vérification des composants...")
     
     # Vérifier la structure des fichiers
     critical_files = [
@@ -65,26 +65,26 @@ def check_system_components():
     all_files_ok = True
     for file_path in critical_files:
         if Path(file_path).exists():
-            print(f"✅ {file_path}")
+            print(f"[OK] {file_path}")
         else:
-            print(f"❌ {file_path} manquant")
+            print(f"[ERROR] {file_path} manquant")
             all_files_ok = False
     
     return all_files_ok
 
 def demo_configuration():
     """Démonstration de la configuration"""
-    print("\n⚙️ Configuration du système...")
+    print("\n Configuration du système...")
     
     try:
         from app.config import Config
-        print(f"✅ Chunk size par défaut: {Config.DEFAULT_CHUNK_SIZE}")
-        print(f"✅ Documents récupérés: {Config.DEFAULT_K_DOCUMENTS}")
-        print(f"✅ Modèle Mistral: {Config.MISTRAL_MODEL}")
-        print(f"✅ Chemin ChromaDB: {Config.CHROMADB_PATH}")
+        print(f"[OK] Chunk size par défaut: {Config.DEFAULT_CHUNK_SIZE}")
+        print(f"[OK] Documents récupérés: {Config.DEFAULT_K_DOCUMENTS}")
+        print(f"[OK] Modèle Mistral: {Config.MISTRAL_MODEL}")
+        print(f"[OK] Chemin ChromaDB: {Config.CHROMADB_PATH}")
         return True
     except Exception as e:
-        print(f"❌ Erreur configuration: {e}")
+        print(f"[ERROR] Erreur configuration: {e}")
         return False
 
 def demo_components():
@@ -102,67 +102,67 @@ def demo_components():
     for module, component, description in components:
         try:
             exec(f"from {module} import {component}")
-            print(f"✅ {component} - {description}")
+            print(f"[OK] {component} - {description}")
         except Exception as e:
-            print(f"❌ {component} - {description}: {e}")
+            print(f"[ERROR] {component} - {description}: {e}")
             all_components_ok = False
     
     return all_components_ok
 
 def demo_orchestration():
     """Démonstration de l'orchestration"""
-    print("\n🔄 Test de l'orchestration...")
+    print("\n Test de l'orchestration...")
     
     try:
         from app.orchestration_interface import orchestration_interface
-        print(f"✅ Interface orchestration: {type(orchestration_interface).__name__}")
+        print(f"[OK] Interface orchestration: {type(orchestration_interface).__name__}")
         
         from app.components.prefect_bridge import prefect_bridge
-        print(f"✅ Pont Prefect: {type(prefect_bridge).__name__}")
-        print(f"✅ Workflows disponibles: {'Oui' if prefect_bridge.is_available() else 'Non (normal en mode test)'}")
+        print(f"[OK] Pont Prefect: {type(prefect_bridge).__name__}")
+        print(f"[OK] Workflows disponibles: {'Oui' if prefect_bridge.is_available() else 'Non (normal en mode test)'}")
         
         return True
     except Exception as e:
-        print(f"❌ Erreur orchestration: {e}")
+        print(f"[ERROR] Erreur orchestration: {e}")
         return False
 
 def show_usage_examples():
     """Afficher des exemples d'utilisation"""
     print("\n📚 Exemples d'utilisation:")
     print("""
-🚀 Démarrage rapide:
+ Démarrage rapide:
    python app/main.py
 
-🔧 Configuration Prefect:
+ Configuration Prefect:
    ./scripts/start_prefect.sh
 
-🧪 Tests système:
+ Tests système:
    python test_system_status.py
 
-🔍 Interface web:
+ Interface web:
    http://localhost:7860
 
-📊 Interface Prefect:
+ Interface Prefect:
    http://localhost:4200
 """)
 
 def show_next_steps():
     """Afficher les prochaines étapes"""
-    print("\n🎯 Prochaines étapes:")
+    print("\n Prochaines étapes:")
     print("""
-1. 🔑 Configurer votre clé API:
+1.  Configurer votre clé API:
    export MISTRAL_API_KEY="votre_cle_api"
 
-2. 🚀 Démarrer l'application:
+2.  Démarrer l'application:
    python app/main.py
 
-3. 📄 Uploader un document dans l'interface
+3.  Uploader un document dans l'interface
 
-4. 💬 Poser vos premières questions
+4.  Poser vos premières questions
 
-5. 🔄 Explorer l'orchestration Prefect
+5.  Explorer l'orchestration Prefect
 
-6. 📊 Surveiller les performances
+6.  Surveiller les performances
 """)
 
 def main():
@@ -185,19 +185,19 @@ def main():
             if not result:
                 all_passed = False
         except Exception as e:
-            print(f"❌ Erreur {check_name}: {e}")
+            print(f"[ERROR] Erreur {check_name}: {e}")
             all_passed = False
     
     # Résultat final
     print("\n" + "=" * 60)
     if all_passed:
-        print("🎉 DÉMONSTRATION RÉUSSIE!")
-        print("✅ Tous les composants sont opérationnels")
-        print("🚀 DontREADME est prêt à être utilisé!")
+        print(" DÉMONSTRATION RÉUSSIE!")
+        print("[OK] Tous les composants sont opérationnels")
+        print(" DontREADME est prêt à être utilisé!")
     else:
-        print("⚠️ PROBLÈMES DÉTECTÉS")
-        print("🔧 Certains composants nécessitent une attention")
-        print("📋 Consultez les messages ci-dessus pour les corrections")
+        print("[WARN] PROBLÈMES DÉTECTÉS")
+        print(" Certains composants nécessitent une attention")
+        print(" Consultez les messages ci-dessus pour les corrections")
     
     print("=" * 60)
     
@@ -207,7 +207,7 @@ def main():
     
     print("\n💡 Pour plus d'informations:")
     print("   📖 README.md - Guide utilisateur complet")
-    print("   🔧 DEVELOPER_GUIDE.md - Documentation technique")
+    print("    DEVELOPER_GUIDE.md - Documentation technique")
     print("   🆘 Issues GitHub pour le support")
 
 if __name__ == "__main__":

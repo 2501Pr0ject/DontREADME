@@ -1,32 +1,32 @@
-# 🚀 Guide d'utilisation Prefect pour DontREADME
+#  Guide d'utilisation Prefect pour DontREADME
 
-## 📋 Vue d'ensemble
+##  Vue d'ensemble
 
 L'orchestration Prefect pour DontREADME fournit une automatisation complète des workflows de traitement de documents, maintenance système, surveillance et tests. Cette implémentation permet une gestion robuste et scalable de votre chatbot documentaire.
 
-## 🏗️ Architecture des Workflows
+##  Architecture des Workflows
 
-### 📄 Traitement de Documents
+###  Traitement de Documents
 - **`batch_document_flow`** : Traitement en parallèle de multiples documents
 - **`process_folder_documents`** : Workflow complet avec surveillance et rapports
 - **`nightly_batch_processing`** : Traitement automatisé nocturne des nouveaux documents
 
-### 🛠️ Maintenance
+###  Maintenance
 - **`database_maintenance_flow`** : Sauvegarde et optimisation ChromaDB
 - **`cleanup_old_files_flow`** : Nettoyage des fichiers anciens avec simulation
 - **`weekly_maintenance_flow`** : Maintenance complète hebdomadaire
 
-### 📊 Surveillance
+###  Surveillance
 - **`health_check_flow`** : Surveillance continue de la santé système
 - **`performance_monitoring_flow`** : Collecte de métriques de performance
 - **`continuous_monitoring_flow`** : Surveillance prolongée avec alertes
 
-### 🧪 Tests
+###  Tests
 - **`automated_testing_flow`** : Suite complète de tests automatisés
 - **`regression_testing_flow`** : Tests de régression avec comparaison baseline
 - **`smoke_testing_flow`** : Tests rapides de fonctionnement de base
 
-## ⚡ Démarrage Rapide
+##  Démarrage Rapide
 
 ### 1. Installation des dépendances
 ```bash
@@ -60,7 +60,7 @@ export MISTRAL_API_KEY="votre_cle_api_ici"
 - **Samedi 04:00** - Tests automatisés complets
 - **Dimanche 03:00** - Maintenance complète hebdomadaire
 
-## 🎯 Utilisation Manuelle
+##  Utilisation Manuelle
 
 ### Lancer un workflow unique
 ```python
@@ -100,7 +100,7 @@ result = asyncio.run(database_maintenance_flow(
 ))
 ```
 
-## 📊 Surveillance et Alertes
+##  Surveillance et Alertes
 
 ### Métriques Surveillées
 - **CPU** : Utilisation processeur (seuil: 80%)
@@ -123,7 +123,7 @@ await health_check_flow(
 )
 ```
 
-## 🗃️ Gestion des Données
+##  Gestion des Données
 
 ### Structure de Stockage
 ```
@@ -141,7 +141,7 @@ data/
 - **Rapports** : Conservation 30 jours
 - **Métriques** : Rétention 30 jours
 
-## 🧪 Tests et Qualité
+##  Tests et Qualité
 
 ### Types de Tests
 1. **Tests de Santé** : Vérification des composants système
@@ -168,7 +168,7 @@ result = asyncio.run(regression_testing_flow(
 ))
 ```
 
-## ⚙️ Configuration Avancée
+##  Configuration Avancée
 
 ### Variables d'Environnement
 ```bash
@@ -203,7 +203,7 @@ async def mon_workflow(param1: str, param2: int):
     return result
 ```
 
-## 🔧 Dépannage
+##  Dépannage
 
 ### Problèmes Courants
 
@@ -247,7 +247,7 @@ tail -f logs/prefect_worker.log
 prefect flow-run logs <run-id>
 ```
 
-## 📈 Performance et Scalabilité
+##  Performance et Scalabilité
 
 ### Optimisations Implémentées
 - **Traitement parallèle** : Jusqu'à 3 documents simultanés
@@ -311,10 +311,10 @@ prefect profile ls
 
 ---
 
-## 🎯 Conclusion
+##  Conclusion
 
 Cette implémentation Prefect transforme DontREADME en une solution robuste et automatisée, capable de gérer l'ensemble du cycle de vie documentaire avec surveillance, maintenance et tests intégrés. L'architecture modulaire permet une extension facile selon vos besoins spécifiques.
 
 Pour toute question ou personnalisation, n'hésitez pas à consulter la documentation des workflows dans le dossier `workflows/` ou à adapter les configurations selon votre environnement.
 
-**Bonne orchestration ! 🚀**
+**Bonne orchestration ! **

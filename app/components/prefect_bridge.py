@@ -15,10 +15,10 @@ try:
     # from workflows.monitoring import health_check_flow, performance_monitoring_flow
     # from workflows.testing import smoke_testing_flow
     WORKFLOWS_AVAILABLE = False  # Temporaire pour tests
-    print("ℹ️ Workflows temporairement désactivés pour validation système")
+    print(" Workflows temporairement désactivés pour validation système")
 except ImportError:
     WORKFLOWS_AVAILABLE = False
-    print("⚠️ Workflows Prefect non disponibles")
+    print("[WARN] Workflows Prefect non disponibles")
 
 class PrefectBridge:
     """Pont pour exécuter les workflows Prefect depuis l'interface"""
@@ -181,7 +181,7 @@ class PrefectBridge:
     def smoke_tests_sync(self, api_key: str) -> str:
         """Version synchrone pour Gradio des tests smoke"""
         if not api_key.strip():
-            return "❌ Clé API Mistral requise pour les tests"
+            return "[ERROR] Clé API Mistral requise pour les tests"
         
         result = self.run_sync(self.run_smoke_tests(api_key))
         return self._format_result_for_display(result, "Tests smoke")
@@ -194,13 +194,13 @@ class PrefectBridge:
     def _format_result_for_display(self, result: Dict[str, Any], operation_name: str) -> str:
         """Formater le résultat pour affichage dans Gradio"""
         if not isinstance(result, dict):
-            return f"❌ Résultat invalide pour {operation_name}"
+            return f"[ERROR] Résultat invalide pour {operation_name}"
         
         status = result.get("status", "unknown")
         
         if status == "error":
             return f"""
-❌ **Échec de {operation_name}**
+[ERROR] **Échec de {operation_name}**
 
 **Erreur**: {result.get('message', 'Erreur inconnue')}
 
@@ -223,11 +223,11 @@ class PrefectBridge:
             elif "monitoring" in operation_name.lower():
                 return self._format_monitoring_result(result)
             else:
-                return f"✅ {operation_name} terminé avec succès"
+                return f"[OK] {operation_name} terminé avec succès"
         
         else:
             return f"""
-⚠️ **{operation_name} - Statut: {status}**
+[WARN] **{operation_name} - Statut: {status}**
 
 **Message**: {result.get('message', 'Aucun message')}
 **Démarré**: {result.get('started_at', 'N/A')}
@@ -243,15 +243,15 @@ class PrefectBridge:
         success_rate = summary.get("success_rate", 0)
         
         return f"""
-✅ **Traitement par lot terminé**
+[OK] **Traitement par lot terminé**
 
-📊 **Résultats**:
+ **Résultats**:
 - Documents traités: {docs_processed}
 - Échecs: {docs_failed}
 - Taux de succès: {success_rate}%
 - Temps total: {total_time:.1f}s
 
-⏱️ **Terminé**: {result.get('completed_at', 'N/A')[:19]}
+ **Terminé**: {result.get('completed_at', 'N/A')[:19]}
         """.strip()
     
     def _format_health_result(self, result: Dict[str, Any]) -> str:
@@ -262,22 +262,22 @@ class PrefectBridge:
         score = health_summary.get("score", detailed_health.get("health_score", 0))
         status = health_summary.get("status", detailed_health.get("overall_status", "unknown"))
         
-        status_emoji = "🟢" if status == "healthy" else "🟡" if status == "degraded" else "🔴"
+        status_emoji = "" if status == "healthy" else "" if status == "degraded" else ""
         
         return f"""
 {status_emoji} **Vérification de santé terminée**
 
-📊 **Score de santé**: {score}/100
-🏥 **Statut**: {status.upper()}
+ **Score de santé**: {score}/100
+ **Statut**: {status.upper()}
 
-💻 **Système**:
+ **Système**:
 - CPU: {detailed_health.get('system', {}).get('cpu_percent', 0):.1f}%
 - Mémoire: {detailed_health.get('system', {}).get('memory_percent', 0):.1f}%
 - Disque: {detailed_health.get('system', {}).get('disk_percent', 0):.1f}%
 
-🗄️ **ChromaDB**: {detailed_health.get('chromadb', {}).get('status', 'unknown')}
+ **ChromaDB**: {detailed_health.get('chromadb', {}).get('status', 'unknown')}
 
-⏱️ **Vérifié**: {result.get('completed_at', 'N/A')[:19]}
+ **Vérifié**: {result.get('completed_at', 'N/A')[:19]}
         """.strip()
     
     def _format_maintenance_result(self, result: Dict[str, Any]) -> str:
@@ -289,16 +289,16 @@ class PrefectBridge:
         optimization_status = operations.get("optimization", {}).get("status", "unknown")
         
         return f"""
-✅ **Maintenance terminée**
+[OK] **Maintenance terminée**
 
-🛠️ **Opérations**:
-- Sauvegarde: {'✅' if backup_status == 'success' else '❌'} {backup_status}
-- Optimisation: {'✅' if optimization_status == 'success' else '❌'} {optimization_status}
+ **Opérations**:
+- Sauvegarde: {'[OK]' if backup_status == 'success' else '[ERROR]'} {backup_status}
+- Optimisation: {'[OK]' if optimization_status == 'success' else '[ERROR]'} {optimization_status}
 
-⏱️ **Durée**: {duration:.1f} secondes
+ **Durée**: {duration:.1f} secondes
 📅 **Terminé**: {result.get('completed_at', 'N/A')[:19]}
 
-💾 **Amélioration santé**: {result.get('health_improvement', {}).get('improvement', 0):+.1f} points
+ **Amélioration santé**: {result.get('health_improvement', {}).get('improvement', 0):+.1f} points
         """.strip()
     
     def _format_test_result(self, result: Dict[str, Any]) -> str:
@@ -309,16 +309,16 @@ class PrefectBridge:
         duration = result.get("duration_seconds", 0)
         
         return f"""
-🧪 **Tests smoke terminés**
+ **Tests smoke terminés**
 
-📊 **Résultats**:
+ **Résultats**:
 - Tests réussis: {passed}/{total}
 - Taux de succès: {success_rate}%
 - Durée: {duration:.1f}s
 
-✅ **Système**: {'OK' if result.get('all_tests_passed', False) else 'KO'}
+[OK] **Système**: {'OK' if result.get('all_tests_passed', False) else 'KO'}
 
-⏱️ **Terminé**: {result.get('completed_at', 'N/A')[:19]}
+ **Terminé**: {result.get('completed_at', 'N/A')[:19]}
         """.strip()
     
     def _format_monitoring_result(self, result: Dict[str, Any]) -> str:
@@ -327,14 +327,14 @@ class PrefectBridge:
         anomalies = result.get("anomalies", [])
         
         return f"""
-📊 **Monitoring performance terminé**
+ **Monitoring performance terminé**
 
-📈 **Score performance**: {performance_score}/100
+ **Score performance**: {performance_score}/100
 🚨 **Anomalies détectées**: {len(anomalies)}
 
-⏱️ **Analysé**: {result.get('completed_at', 'N/A')[:19]}
+ **Analysé**: {result.get('completed_at', 'N/A')[:19]}
 
-📄 **Rapport**: {result.get('performance_report', {}).get('report_file', 'Non généré')}
+ **Rapport**: {result.get('performance_report', {}).get('report_file', 'Non généré')}
         """.strip()
 
 # Instance globale

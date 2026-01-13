@@ -9,69 +9,69 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 def test_file_processor():
     """Test du processeur de fichiers"""
-    print("🧪 Test du FileProcessor")
+    print(" Test du FileProcessor")
     print("=" * 25)
     
     try:
         from app.components.file_processor import FileProcessor
         
         # Test des méthodes statiques
-        print("✅ Import FileProcessor réussi")
+        print("[OK] Import FileProcessor réussi")
         
         # Vérifier que les méthodes existent
         if hasattr(FileProcessor, 'process_uploaded_file'):
-            print("✅ Méthode process_uploaded_file disponible")
+            print("[OK] Méthode process_uploaded_file disponible")
         else:
-            print("❌ Méthode process_uploaded_file manquante")
+            print("[ERROR] Méthode process_uploaded_file manquante")
             return False
         
         return True
         
     except Exception as e:
-        print(f"❌ Erreur: {e}")
+        print(f"[ERROR] Erreur: {e}")
         return False
 
 def test_validators():
     """Test des validateurs"""
-    print("\n🧪 Test des Validateurs")
+    print("\n Test des Validateurs")
     print("=" * 25)
     
     try:
         from utils.validators import FileValidator, InputValidator
         
         # Test FileValidator
-        print("✅ Import FileValidator réussi")
+        print("[OK] Import FileValidator réussi")
         
         # Test InputValidator
-        print("✅ Import InputValidator réussi")
+        print("[OK] Import InputValidator réussi")
         
         # Test validation clé API
         valid, msg = InputValidator.validate_api_key("test_key", "mistral")
-        print(f"✅ Validation clé API: {msg}")
+        print(f"[OK] Validation clé API: {msg}")
         
         # Test validation chunk size
         valid, msg = InputValidator.validate_chunk_size(500)
         if valid:
-            print("✅ Validation chunk size OK")
+            print("[OK] Validation chunk size OK")
         else:
-            print(f"⚠️ Validation chunk size: {msg}")
+            print(f"[WARN] Validation chunk size: {msg}")
         
         return True
         
     except Exception as e:
-        print(f"❌ Erreur: {e}")
+        print(f"[ERROR] Erreur: {e}")
         return False
 
 def test_text_splitter():
     """Test du découpage de texte intelligent"""
-    print("\n🧪 Test du SmartTextSplitter")
+    print("\n Test du SmartTextSplitter")
     print("=" * 30)
     
     try:
         from utils.text_splitter import SmartTextSplitter
         
         splitter = SmartTextSplitter()
-        print("✅ SmartTextSplitter initialisé")
+        print("[OK] SmartTextSplitter initialisé")
         
         # Test avec un texte simple
         test_text = """
@@ -95,29 +95,29 @@ def test_text_splitter():
         )
         
         if documents:
-            print(f"✅ Découpage réussi: {len(documents)} chunks")
+            print(f"[OK] Découpage réussi: {len(documents)} chunks")
             print(f"   Premier chunk: {len(documents[0].page_content)} caractères")
             print(f"   Métadonnées: {list(documents[0].metadata.keys())}")
         else:
-            print("❌ Aucun chunk généré")
+            print("[ERROR] Aucun chunk généré")
             return False
         
         return True
         
     except Exception as e:
-        print(f"❌ Erreur: {e}")
+        print(f"[ERROR] Erreur: {e}")
         return False
 
 def test_performance_monitor():
     """Test du monitoring de performance"""
-    print("\n🧪 Test du PerformanceMonitor")
+    print("\n Test du PerformanceMonitor")
     print("=" * 30)
     
     try:
         from utils.performance import PerformanceMonitor
         
         monitor = PerformanceMonitor()
-        print("✅ PerformanceMonitor initialisé")
+        print("[OK] PerformanceMonitor initialisé")
         
         # Test du décorateur
         @monitor.measure_performance("test_function")
@@ -127,53 +127,53 @@ def test_performance_monitor():
             return "test result"
         
         result = test_function()
-        print(f"✅ Test de mesure de performance: {result}")
+        print(f"[OK] Test de mesure de performance: {result}")
         
         # Vérifier les métriques
         metrics = monitor.get_metrics_summary()
         if metrics:
-            print("✅ Métriques collectées")
+            print("[OK] Métriques collectées")
         else:
-            print("⚠️ Aucune métrique disponible")
+            print("[WARN] Aucune métrique disponible")
         
         return True
         
     except Exception as e:
-        print(f"❌ Erreur: {e}")
+        print(f"[ERROR] Erreur: {e}")
         return False
 
 def test_prompt_templates():
     """Test du gestionnaire de templates"""
-    print("\n🧪 Test du PromptTemplateManager")
+    print("\n Test du PromptTemplateManager")
     print("=" * 32)
     
     try:
         from utils.prompt_templates import PromptTemplateManager
         
         manager = PromptTemplateManager()
-        print("✅ PromptTemplateManager initialisé")
+        print("[OK] PromptTemplateManager initialisé")
         
         # Test des templates disponibles
         available = manager.get_available_templates()
-        print(f"✅ Templates disponibles: {available}")
+        print(f"[OK] Templates disponibles: {available}")
         
         # Test d'obtention d'un template
         template = manager.get_optimized_template("general", "general")
         if template:
-            print("✅ Template récupéré avec succès")
+            print("[OK] Template récupéré avec succès")
         else:
-            print("❌ Échec de récupération de template")
+            print("[ERROR] Échec de récupération de template")
             return False
         
         return True
         
     except Exception as e:
-        print(f"❌ Erreur: {e}")
+        print(f"[ERROR] Erreur: {e}")
         return False
 
 def run_component_tests():
     """Exécuter tous les tests de composants"""
-    print("🔧 TESTS DES COMPOSANTS DONTREADME")
+    print(" TESTS DES COMPOSANTS DONTREADME")
     print("=" * 50)
     
     tests = [
@@ -192,12 +192,12 @@ def run_component_tests():
     passed = sum(results)
     total = len(results)
     
-    print(f"\n📊 RÉSULTATS: {passed}/{total} composants testés avec succès")
+    print(f"\n RÉSULTATS: {passed}/{total} composants testés avec succès")
     
     if passed == total:
-        print("🎉 Tous les composants fonctionnent correctement!")
+        print(" Tous les composants fonctionnent correctement!")
     else:
-        print("⚠️ Certains composants ont des problèmes - vérifiez les logs")
+        print("[WARN] Certains composants ont des problèmes - vérifiez les logs")
     
     return passed == total
 

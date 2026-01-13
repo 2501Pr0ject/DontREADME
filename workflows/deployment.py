@@ -111,7 +111,7 @@ def deploy_all():
     for deployment in ALL_DEPLOYMENTS:
         print(f"Déploiement de {deployment.name}...")
         deployment.apply()
-        print(f"✅ {deployment.name} déployé avec succès")
+        print(f"[OK] {deployment.name} déployé avec succès")
 
 if __name__ == "__main__":
     deploy_all()

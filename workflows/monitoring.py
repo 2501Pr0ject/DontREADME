@@ -37,7 +37,7 @@ async def health_check_flow(
     """
     logger = get_run_logger()
     
-    logger.info("🩺 Surveillance de santé système")
+    logger.info(" Surveillance de santé système")
     check_start = datetime.now()
     
     try:
@@ -100,18 +100,18 @@ async def health_check_flow(
             monitoring_result["alert_sent"] = False
         
         # Logging des résultats
-        logger.info(f"🩺 Monitoring de santé terminé:")
-        logger.info(f"   📊 Score: {health_score}/100")
+        logger.info(f" Monitoring de santé terminé:")
+        logger.info(f"    Score: {health_score}/100")
         logger.info(f"   🚥 Statut: {overall_status.upper()}")
         if issues:
-            logger.warning(f"   ⚠️ Problèmes: {len(issues)}")
+            logger.warning(f"   [WARN] Problèmes: {len(issues)}")
         if needs_alert:
             logger.warning(f"   🚨 Alerte nécessaire (seuil: {alert_threshold})")
         
         return monitoring_result
         
     except Exception as e:
-        logger.error(f"❌ Erreur monitoring santé: {str(e)}")
+        logger.error(f"[ERROR] Erreur monitoring santé: {str(e)}")
         return {
             "status": "error",
             "monitoring_type": "health_check",
@@ -145,7 +145,7 @@ async def performance_monitoring_flow(
     """
     logger = get_run_logger()
     
-    logger.info("📈 Surveillance des performances")
+    logger.info(" Surveillance des performances")
     monitoring_start = datetime.now()
     
     try:
@@ -210,15 +210,15 @@ async def performance_monitoring_flow(
         
         performance_summary["performance_score"] = performance_score
         
-        logger.info(f"📈 Monitoring performance terminé:")
-        logger.info(f"   📊 Score performance: {performance_score}/100")
-        logger.info(f"   🔍 Anomalies détectées: {len(anomalies)}")
-        logger.info(f"   📋 Rapport généré: {'Oui' if generate_detailed_report else 'Non'}")
+        logger.info(f" Monitoring performance terminé:")
+        logger.info(f"    Score performance: {performance_score}/100")
+        logger.info(f"    Anomalies détectées: {len(anomalies)}")
+        logger.info(f"    Rapport généré: {'Oui' if generate_detailed_report else 'Non'}")
         
         return performance_summary
         
     except Exception as e:
-        logger.error(f"❌ Erreur monitoring performance: {str(e)}")
+        logger.error(f"[ERROR] Erreur monitoring performance: {str(e)}")
         return {
             "status": "error",
             "monitoring_type": "performance",
@@ -253,7 +253,7 @@ async def continuous_monitoring_flow(
     """
     logger = get_run_logger()
     
-    logger.info(f"🔄 Surveillance continue ({monitoring_duration_minutes}min)")
+    logger.info(f" Surveillance continue ({monitoring_duration_minutes}min)")
     continuous_start = datetime.now()
     
     try:
@@ -287,7 +287,7 @@ async def continuous_monitoring_flow(
             if check_result["alert_triggered"]:
                 alerts_sent += 1
             
-            logger.info(f"🔍 Check #{len(monitoring_results)}: {check_result['health_status']} "
+            logger.info(f" Check #{len(monitoring_results)}: {check_result['health_status']} "
                        f"(score: {check_result['health_score']})")
             
             # Attendre avant le prochain check
@@ -321,16 +321,16 @@ async def continuous_monitoring_flow(
             "detailed_results": monitoring_results
         }
         
-        logger.info(f"🔄 Surveillance continue terminée:")
-        logger.info(f"   📊 {len(monitoring_results)} vérifications effectuées")
-        logger.info(f"   📈 Score moyen: {avg_health_score:.1f}/100")
+        logger.info(f" Surveillance continue terminée:")
+        logger.info(f"    {len(monitoring_results)} vérifications effectuées")
+        logger.info(f"    Score moyen: {avg_health_score:.1f}/100")
         logger.info(f"   🚨 Alertes envoyées: {alerts_sent}")
-        logger.info(f"   ⏱️ Durée: {monitoring_duration_minutes} minutes")
+        logger.info(f"    Durée: {monitoring_duration_minutes} minutes")
         
         return continuous_summary
         
     except Exception as e:
-        logger.error(f"❌ Erreur surveillance continue: {str(e)}")
+        logger.error(f"[ERROR] Erreur surveillance continue: {str(e)}")
         return {
             "status": "error",
             "monitoring_type": "continuous",
@@ -558,5 +558,5 @@ async def send_health_alert(
     issues = health_result.get("issues", [])
     
     logger.warning(f"🚨 Alerte santé envoyée à {email}:")
-    logger.warning(f"   📊 Score: {health_score}/100 (seuil: {threshold})")
-    logger.warning(f"   ⚠️ Problèmes: {', '.join(issues[:3])}")
+    logger.warning(f"    Score: {health_score}/100 (seuil: {threshold})")
+    logger.warning(f"   [WARN] Problèmes: {', '.join(issues[:3])}")

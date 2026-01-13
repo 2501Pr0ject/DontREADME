@@ -75,7 +75,7 @@ async def batch_document_flow(
                 "results": []
             }
         
-        logger.info(f"📄 {len(documents)} documents trouvés")
+        logger.info(f" {len(documents)} documents trouvés")
         
         # Traiter les documents en parallèle
         processing_tasks = []
@@ -110,7 +110,7 @@ async def batch_document_flow(
         # Tests optionnels si des documents ont été traités avec succès
         test_results = []
         if test_queries and successful_results:
-            logger.info(f"🧪 Exécution de {len(test_queries)} tests")
+            logger.info(f" Exécution de {len(test_queries)} tests")
             
             for query in test_queries:
                 test_task = test_document_query.submit(
@@ -151,13 +151,13 @@ async def batch_document_flow(
             }
         }
         
-        logger.info(f"✅ Traitement en lot terminé:")
-        logger.info(f"   📊 {len(successful_results)}/{len(documents)} documents traités")
-        logger.info(f"   ⏱️ Temps total: {processing_time:.1f}s")
+        logger.info(f"[OK] Traitement en lot terminé:")
+        logger.info(f"    {len(successful_results)}/{len(documents)} documents traités")
+        logger.info(f"    Temps total: {processing_time:.1f}s")
         logger.info(f"   🧩 Chunks créés: {total_chunks}")
         
         if failed_results:
-            logger.warning(f"⚠️ {len(failed_results)} échecs:")
+            logger.warning(f"[WARN] {len(failed_results)} échecs:")
             for failed in failed_results[:3]:  # Log les 3 premiers échecs
                 logger.warning(f"   • {Path(failed['file_path']).name}: {failed.get('error_message', 'Erreur inconnue')}")
         
@@ -167,7 +167,7 @@ async def batch_document_flow(
         batch_end_time = datetime.now()
         processing_time = (batch_end_time - batch_start_time).total_seconds()
         
-        logger.error(f"❌ Erreur critique lors du traitement en lot: {str(e)}")
+        logger.error(f"[ERROR] Erreur critique lors du traitement en lot: {str(e)}")
         return {
             "status": "error",
             "started_at": batch_start_time.isoformat(),
@@ -204,18 +204,18 @@ async def process_folder_documents(
     """
     logger = get_run_logger()
     
-    logger.info(f"🚀 Workflow complet pour dossier: {input_folder}")
+    logger.info(f" Workflow complet pour dossier: {input_folder}")
     
     try:
         # Phase 1: Vérification de santé préliminaire
         if enable_monitoring:
             from .tasks import check_system_health
             
-            logger.info("🩺 Vérification de santé préliminaire")
+            logger.info(" Vérification de santé préliminaire")
             health_check = check_system_health()
             
             if health_check.get("overall_status") == "unhealthy":
-                logger.warning("⚠️ Système en mauvaise santé - continuation risquée")
+                logger.warning("[WARN] Système en mauvaise santé - continuation risquée")
         
         # Phase 2: Traitement en lot principal
         logger.info("📂 Démarrage du traitement en lot")
@@ -235,7 +235,7 @@ async def process_folder_documents(
         
         # Phase 3: Génération du rapport (si demandée)
         if output_report:
-            logger.info(f"📊 Génération du rapport: {output_report}")
+            logger.info(f" Génération du rapport: {output_report}")
             
             from .tasks import generate_performance_report
             
@@ -258,11 +258,11 @@ async def process_folder_documents(
             with open(report_path, 'w', encoding='utf-8') as f:
                 json.dump(final_report, f, indent=2, ensure_ascii=False)
             
-            logger.info(f"📋 Rapport sauvegardé: {output_report}")
+            logger.info(f" Rapport sauvegardé: {output_report}")
         
         # Phase 4: Vérification de santé finale
         if enable_monitoring:
-            logger.info("🩺 Vérification de santé finale")
+            logger.info(" Vérification de santé finale")
             final_health = check_system_health()
             
             # Comparaison santé avant/après
@@ -289,16 +289,16 @@ async def process_folder_documents(
             "completed_at": datetime.now().isoformat()
         }
         
-        logger.info(f"🎉 Workflow terminé avec succès:")
-        logger.info(f"   📁 Dossier: {input_folder}")
-        logger.info(f"   📄 Documents: {workflow_summary['documents_processed']}")
-        logger.info(f"   ✅ Taux de succès: {workflow_summary['success_rate']}%")
-        logger.info(f"   ⏱️ Temps total: {workflow_summary['total_time']}s")
+        logger.info(f" Workflow terminé avec succès:")
+        logger.info(f"    Dossier: {input_folder}")
+        logger.info(f"    Documents: {workflow_summary['documents_processed']}")
+        logger.info(f"   [OK] Taux de succès: {workflow_summary['success_rate']}%")
+        logger.info(f"    Temps total: {workflow_summary['total_time']}s")
         
         return workflow_summary
         
     except Exception as e:
-        logger.error(f"❌ Erreur critique du workflow: {str(e)}")
+        logger.error(f"[ERROR] Erreur critique du workflow: {str(e)}")
         return {
             "status": "error",
             "input_folder": input_folder,
@@ -342,7 +342,7 @@ async def nightly_batch_processing(
         # Vérifier s'il y a des documents à traiter
         watch_path = Path(watch_folder)
         if not watch_path.exists():
-            logger.info(f"📁 Création du dossier de surveillance: {watch_folder}")
+            logger.info(f" Création du dossier de surveillance: {watch_folder}")
             watch_path.mkdir(parents=True, exist_ok=True)
             
             return {
@@ -367,7 +367,7 @@ async def nightly_batch_processing(
             }
         
         # Traitement des documents trouvés
-        logger.info(f"📄 {document_count} document(s) trouvé(s) pour traitement")
+        logger.info(f" {document_count} document(s) trouvé(s) pour traitement")
         
         # Générer un rapport avec timestamp
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -406,14 +406,14 @@ async def nightly_batch_processing(
         }
         
         logger.info(f"🌙 Traitement nocturne terminé:")
-        logger.info(f"   📄 {document_count} documents traités")
+        logger.info(f"    {document_count} documents traités")
         logger.info(f"   📦 Documents archivés dans: {archive_folder}")
-        logger.info(f"   📊 Rapport: {report_file}")
+        logger.info(f"    Rapport: {report_file}")
         
         return nightly_summary
         
     except Exception as e:
-        logger.error(f"❌ Erreur traitement nocturne: {str(e)}")
+        logger.error(f"[ERROR] Erreur traitement nocturne: {str(e)}")
         return {
             "status": "error",
             "error_type": type(e).__name__,

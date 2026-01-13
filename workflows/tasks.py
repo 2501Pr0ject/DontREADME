@@ -51,7 +51,7 @@ def process_single_document(
     logger = get_run_logger()
     
     try:
-        logger.info(f"📄 Traitement du document: {file_path}")
+        logger.info(f" Traitement du document: {file_path}")
         
         # Vérifier que le fichier existe
         if not Path(file_path).exists():
@@ -107,14 +107,14 @@ def process_single_document(
             "metrics": metrics
         }
         
-        logger.info(f"✅ Document traité avec succès: {filename}")
-        logger.info(f"   📊 {result['chunks_created']} chunks créés")
-        logger.info(f"   ⏱️ Temps: {result['processing_time']:.2f}s")
+        logger.info(f"[OK] Document traité avec succès: {filename}")
+        logger.info(f"    {result['chunks_created']} chunks créés")
+        logger.info(f"    Temps: {result['processing_time']:.2f}s")
         
         return result
         
     except Exception as e:
-        logger.error(f"❌ Erreur traitement document {file_path}: {str(e)}")
+        logger.error(f"[ERROR] Erreur traitement document {file_path}: {str(e)}")
         return {
             "status": "error",
             "file_path": file_path,
@@ -200,15 +200,15 @@ def test_document_query(
             "tested_at": datetime.now().isoformat()
         }
         
-        logger.info(f"✅ Test réussi - Score qualité: {quality_score}/100")
-        logger.info(f"   📝 Réponse: {len(response_text)} caractères")
+        logger.info(f"[OK] Test réussi - Score qualité: {quality_score}/100")
+        logger.info(f"    Réponse: {len(response_text)} caractères")
         logger.info(f"   📚 Sources: {len(sources)}")
-        logger.info(f"   ⏱️ Temps: {response_time:.2f}s")
+        logger.info(f"    Temps: {response_time:.2f}s")
         
         return result
         
     except Exception as e:
-        logger.error(f"❌ Erreur test requête: {str(e)}")
+        logger.error(f"[ERROR] Erreur test requête: {str(e)}")
         return {
             "status": "error",
             "question": question,
@@ -241,7 +241,7 @@ def cleanup_old_data(
     logger = get_run_logger()
     
     try:
-        logger.info(f"🧹 Nettoyage des fichiers > {max_age_days} jours")
+        logger.info(f" Nettoyage des fichiers > {max_age_days} jours")
         
         # Répertoires par défaut
         if directories is None:
@@ -274,7 +274,7 @@ def cleanup_old_data(
                         dir_cleaned += 1
                         dir_size_freed += file_size
                         
-                        logger.debug(f"🗑️ Supprimé: {file_path}")
+                        logger.debug(f" Supprimé: {file_path}")
             
             cleaned_by_dir[directory] = {
                 "files_cleaned": dir_cleaned,
@@ -294,14 +294,14 @@ def cleanup_old_data(
             "cleaned_at": datetime.now().isoformat()
         }
         
-        logger.info(f"✅ Nettoyage terminé:")
-        logger.info(f"   🗑️ {total_cleaned} fichiers supprimés")
-        logger.info(f"   💾 {result['total_size_freed_mb']} MB libérés")
+        logger.info(f"[OK] Nettoyage terminé:")
+        logger.info(f"    {total_cleaned} fichiers supprimés")
+        logger.info(f"    {result['total_size_freed_mb']} MB libérés")
         
         return result
         
     except Exception as e:
-        logger.error(f"❌ Erreur nettoyage: {str(e)}")
+        logger.error(f"[ERROR] Erreur nettoyage: {str(e)}")
         return {
             "status": "error",
             "error_type": type(e).__name__,
@@ -326,7 +326,7 @@ def check_system_health() -> Dict[str, Any]:
     logger = get_run_logger()
     
     try:
-        logger.info("🩺 Vérification de santé système")
+        logger.info(" Vérification de santé système")
         
         # Métriques système
         cpu_percent = psutil.cpu_percent(interval=1)
@@ -411,19 +411,19 @@ def check_system_health() -> Dict[str, Any]:
             "checked_at": datetime.now().isoformat()
         }
         
-        logger.info(f"🩺 Santé système: {overall_status.upper()}")
-        logger.info(f"   📊 Score: {health_score}/100")
-        logger.info(f"   🖥️ CPU: {cpu_percent}%")
-        logger.info(f"   💾 RAM: {memory.percent}%")
+        logger.info(f" Santé système: {overall_status.upper()}")
+        logger.info(f"    Score: {health_score}/100")
+        logger.info(f"    CPU: {cpu_percent}%")
+        logger.info(f"    RAM: {memory.percent}%")
         logger.info(f"   💿 Disque: {disk.percent}%")
         
         if issues:
-            logger.warning(f"⚠️ Problèmes détectés: {', '.join(issues)}")
+            logger.warning(f"[WARN] Problèmes détectés: {', '.join(issues)}")
         
         return result
         
     except Exception as e:
-        logger.error(f"❌ Erreur vérification santé: {str(e)}")
+        logger.error(f"[ERROR] Erreur vérification santé: {str(e)}")
         return {
             "status": "error",
             "overall_status": "unknown",
@@ -454,7 +454,7 @@ def generate_performance_report(
     logger = get_run_logger()
     
     try:
-        logger.info("📊 Génération du rapport de performance")
+        logger.info(" Génération du rapport de performance")
         
         # Vérification de santé
         health_result = check_system_health()
@@ -519,14 +519,14 @@ def generate_performance_report(
         
         report["report_file"] = str(report_file)
         
-        logger.info(f"📊 Rapport généré: {report_file.name}")
-        logger.info(f"   🩺 Santé: {health_result.get('overall_status', 'unknown')}")
-        logger.info(f"   📈 Métriques: {len(performance_summary)} catégories")
+        logger.info(f" Rapport généré: {report_file.name}")
+        logger.info(f"    Santé: {health_result.get('overall_status', 'unknown')}")
+        logger.info(f"    Métriques: {len(performance_summary)} catégories")
         
         return report
         
     except Exception as e:
-        logger.error(f"❌ Erreur génération rapport: {str(e)}")
+        logger.error(f"[ERROR] Erreur génération rapport: {str(e)}")
         return {
             "status": "error",
             "error_type": type(e).__name__,

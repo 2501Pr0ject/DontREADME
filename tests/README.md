@@ -1,4 +1,4 @@
-# 🧪 Tests DontREADME
+#  Tests DontREADME
 
 Ce dossier contient tous les tests pour le projet DontREADME.
 
@@ -39,7 +39,7 @@ for test in tests/test_*.py; do python "$test"; done
 
 ## Couverture des Tests
 
-### ✅ Composants Testés
+### [OK] Composants Testés
 
 - **Interface Gradio** - Création et validation
 - **FileProcessor** - Traitement de fichiers
@@ -50,7 +50,7 @@ for test in tests/test_*.py; do python "$test"; done
 - **VectorStore** - Base vectorielle ChromaDB
 - **Embeddings** - API HuggingFace
 
-### 🎯 Métriques de Qualité
+###  Métriques de Qualité
 
 - **Import des modules** - 100%
 - **Structure des fichiers** - 100%
@@ -59,7 +59,7 @@ for test in tests/test_*.py; do python "$test"; done
 
 ## Nettoyage Effectué
 
-### ❌ Dossiers Supprimés
+### [ERROR] Dossiers Supprimés
 - `test_chroma/` - Tests ChromaDB obsolètes
 - `test_chroma_clean/` - Tests ChromaDB nettoyés
 - `test_chroma_simple/` - Tests ChromaDB simplifiés
@@ -67,7 +67,7 @@ for test in tests/test_*.py; do python "$test"; done
 - `test_fake_embeddings_v2/` - Tests embeddings factices v2
 - `test_fake_embeddings_v3/` - Tests embeddings factices v3
 
-### ✅ Tests Conservés et Centralisés
+### [OK] Tests Conservés et Centralisés
 - Tests d'interface → `tests/test_gradio_interface.py`
 - Tests système → `tests/test_system_status.py`
 - Tests composants → `tests/test_components.py`

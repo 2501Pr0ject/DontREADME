@@ -39,7 +39,7 @@ async def database_maintenance_flow(
     """
     logger = get_run_logger()
     
-    logger.info("🛠️ Démarrage de la maintenance ChromaDB")
+    logger.info(" Démarrage de la maintenance ChromaDB")
     maintenance_start = datetime.now()
     
     try:
@@ -51,40 +51,40 @@ async def database_maintenance_flow(
         }
         
         # Vérification préliminaire de santé
-        logger.info("🩺 Vérification de santé préliminaire")
+        logger.info(" Vérification de santé préliminaire")
         initial_health = check_system_health()
         maintenance_results["initial_health"] = initial_health
         
         if initial_health.get("overall_status") == "unhealthy":
-            logger.warning("⚠️ Système en mauvaise santé - maintenance risquée")
+            logger.warning("[WARN] Système en mauvaise santé - maintenance risquée")
         
         # Phase 1: Sauvegarde de la base de données
         if backup_database:
-            logger.info("💾 Création de sauvegarde ChromaDB")
+            logger.info(" Création de sauvegarde ChromaDB")
             
             backup_result = await create_chromadb_backup()
             maintenance_results["operations"]["backup"] = backup_result
             
             if backup_result.get("status") != "success":
-                logger.error("❌ Échec de la sauvegarde - arrêt de la maintenance")
+                logger.error("[ERROR] Échec de la sauvegarde - arrêt de la maintenance")
                 return {**maintenance_results, "status": "failed", "reason": "backup_failed"}
         
         # Phase 2: Nettoyage et optimisation des collections
         if optimize_collections:
-            logger.info("⚡ Optimisation des collections ChromaDB")
+            logger.info(" Optimisation des collections ChromaDB")
             
             optimization_result = await optimize_chromadb_collections()
             maintenance_results["operations"]["optimization"] = optimization_result
         
         # Phase 3: Vacuum de la base (si supporté)
         if vacuum_database:
-            logger.info("🧹 Nettoyage de la base ChromaDB")
+            logger.info(" Nettoyage de la base ChromaDB")
             
             vacuum_result = await vacuum_chromadb()
             maintenance_results["operations"]["vacuum"] = vacuum_result
         
         # Phase 4: Vérification post-maintenance
-        logger.info("🩺 Vérification de santé post-maintenance")
+        logger.info(" Vérification de santé post-maintenance")
         final_health = check_system_health()
         maintenance_results["final_health"] = final_health
         
@@ -108,10 +108,10 @@ async def database_maintenance_flow(
             }
         })
         
-        logger.info(f"✅ Maintenance ChromaDB terminée:")
-        logger.info(f"   ⏱️ Durée: {maintenance_duration:.1f}s")
-        logger.info(f"   📊 Amélioration santé: {improvement:+.1f} points")
-        logger.info(f"   🏥 Santé finale: {final_health.get('overall_status', 'unknown')}")
+        logger.info(f"[OK] Maintenance ChromaDB terminée:")
+        logger.info(f"    Durée: {maintenance_duration:.1f}s")
+        logger.info(f"    Amélioration santé: {improvement:+.1f} points")
+        logger.info(f"    Santé finale: {final_health.get('overall_status', 'unknown')}")
         
         return maintenance_results
         
@@ -119,7 +119,7 @@ async def database_maintenance_flow(
         maintenance_end = datetime.now()
         maintenance_duration = (maintenance_end - maintenance_start).total_seconds()
         
-        logger.error(f"❌ Erreur lors de la maintenance: {str(e)}")
+        logger.error(f"[ERROR] Erreur lors de la maintenance: {str(e)}")
         return {
             "status": "error",
             "started_at": maintenance_start.isoformat(),
@@ -159,9 +159,9 @@ async def cleanup_old_files_flow(
     """
     logger = get_run_logger()
     
-    logger.info(f"🧹 Nettoyage des fichiers anciens (>{max_age_days} jours)")
+    logger.info(f" Nettoyage des fichiers anciens (>{max_age_days} jours)")
     if dry_run:
-        logger.info("🔍 Mode simulation activé - aucune suppression")
+        logger.info(" Mode simulation activé - aucune suppression")
     
     cleanup_start = datetime.now()
     
@@ -179,14 +179,14 @@ async def cleanup_old_files_flow(
             directories_to_clean.append("./data/reports")
         
         if not directories_to_clean:
-            logger.warning("⚠️ Aucun répertoire sélectionné pour nettoyage")
+            logger.warning("[WARN] Aucun répertoire sélectionné pour nettoyage")
             return {
                 "status": "skipped",
                 "reason": "no_directories_selected",
                 "directories_to_clean": []
             }
         
-        logger.info(f"📁 Répertoires à nettoyer: {directories_to_clean}")
+        logger.info(f" Répertoires à nettoyer: {directories_to_clean}")
         
         # Effectuer le nettoyage (ou simulation)
         if dry_run:
@@ -212,10 +212,10 @@ async def cleanup_old_files_flow(
             "directories_processed": len(directories_to_clean)
         }
         
-        logger.info(f"✅ Nettoyage terminé:")
-        logger.info(f"   🗑️ Fichiers traités: {cleanup_result.get('total_files_cleaned', 0)}")
-        logger.info(f"   💾 Espace libéré: {cleanup_result.get('total_size_freed_mb', 0)} MB")
-        logger.info(f"   ⏱️ Durée: {cleanup_duration:.1f}s")
+        logger.info(f"[OK] Nettoyage terminé:")
+        logger.info(f"    Fichiers traités: {cleanup_result.get('total_files_cleaned', 0)}")
+        logger.info(f"    Espace libéré: {cleanup_result.get('total_size_freed_mb', 0)} MB")
+        logger.info(f"    Durée: {cleanup_duration:.1f}s")
         
         return result
         
@@ -223,7 +223,7 @@ async def cleanup_old_files_flow(
         cleanup_end = datetime.now()
         cleanup_duration = (cleanup_end - cleanup_start).total_seconds()
         
-        logger.error(f"❌ Erreur lors du nettoyage: {str(e)}")
+        logger.error(f"[ERROR] Erreur lors du nettoyage: {str(e)}")
         return {
             "status": "error",
             "started_at": cleanup_start.isoformat(),
@@ -266,7 +266,7 @@ async def weekly_maintenance_flow(
         }
         
         # Task 1: Maintenance de la base de données
-        logger.info("🛠️ Maintenance de la base de données")
+        logger.info(" Maintenance de la base de données")
         db_maintenance = await database_maintenance_flow(
             vacuum_database=True,
             backup_database=True,
@@ -275,7 +275,7 @@ async def weekly_maintenance_flow(
         maintenance_results["tasks"]["database_maintenance"] = db_maintenance
         
         # Task 2: Nettoyage des fichiers anciens
-        logger.info("🧹 Nettoyage des fichiers anciens")
+        logger.info(" Nettoyage des fichiers anciens")
         cleanup_result = await cleanup_old_files_flow(
             max_age_days=14,  # Plus agressif pour la maintenance hebdomadaire
             include_uploads=True,
@@ -285,17 +285,17 @@ async def weekly_maintenance_flow(
         maintenance_results["tasks"]["file_cleanup"] = cleanup_result
         
         # Task 3: Génération du rapport de performance
-        logger.info("📊 Génération du rapport hebdomadaire")
+        logger.info(" Génération du rapport hebdomadaire")
         performance_report = generate_performance_report(include_system_metrics=True)
         maintenance_results["tasks"]["performance_report"] = performance_report
         
         # Task 4: Vérification de santé finale
-        logger.info("🩺 Vérification de santé globale")
+        logger.info(" Vérification de santé globale")
         final_health = check_system_health()
         maintenance_results["tasks"]["final_health"] = final_health
         
         # Task 5: Optimisation des modèles (si nécessaire)
-        logger.info("🤖 Vérification des modèles ML")
+        logger.info(" Vérification des modèles ML")
         models_check = await check_ml_models_health()
         maintenance_results["tasks"]["models_check"] = models_check
         
@@ -330,11 +330,11 @@ async def weekly_maintenance_flow(
         if notification_email:
             await send_maintenance_notification(maintenance_results, notification_email)
         
-        logger.info(f"✅ Maintenance hebdomadaire terminée:")
-        logger.info(f"   ⏱️ Durée: {maintenance_duration/60:.1f} minutes")
-        logger.info(f"   📊 Tâches: {successful_tasks}/{total_tasks} réussies")
-        logger.info(f"   💾 Espace libéré: {total_space_freed} MB")
-        logger.info(f"   🏥 Santé finale: {final_health.get('overall_status', 'unknown')}")
+        logger.info(f"[OK] Maintenance hebdomadaire terminée:")
+        logger.info(f"    Durée: {maintenance_duration/60:.1f} minutes")
+        logger.info(f"    Tâches: {successful_tasks}/{total_tasks} réussies")
+        logger.info(f"    Espace libéré: {total_space_freed} MB")
+        logger.info(f"    Santé finale: {final_health.get('overall_status', 'unknown')}")
         
         return maintenance_results
         
@@ -342,7 +342,7 @@ async def weekly_maintenance_flow(
         weekly_end = datetime.now()
         maintenance_duration = (weekly_end - weekly_start).total_seconds()
         
-        logger.error(f"❌ Erreur lors de la maintenance hebdomadaire: {str(e)}")
+        logger.error(f"[ERROR] Erreur lors de la maintenance hebdomadaire: {str(e)}")
         
         error_result = {
             "status": "error",

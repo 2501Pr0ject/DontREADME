@@ -1,11 +1,11 @@
-# 🔧 Récapitulatif des Modifications - DontREADME
+#  Récapitulatif des Modifications - DontREADME
 
 **Date :** 12 juin 2025  
 **Session de debug :** Lancement de l'application Gradio avec Mistral AI
 
 ---
 
-## 🎯 Objectif Initial
+##  Objectif Initial
 Lancer l'application ChatBot documentaire avec :
 - Interface Gradio fonctionnelle
 - Traitement de documents (PDF, DOCX, TXT)
@@ -73,7 +73,7 @@ Lancer l'application ChatBot documentaire avec :
 2. **Désactivation temporaire des embeddings** (solution finale) :
    ```python
    def _setup_embeddings(self):
-       print("⚠️ MODE TEST - Embeddings désactivés temporairement")
+       print("[WARN] MODE TEST - Embeddings désactivés temporairement")
        self.embeddings = None
    ```
 
@@ -90,10 +90,10 @@ Lancer l'application ChatBot documentaire avec :
 
 **Solution :**
 ```python
-# ❌ INCORRECT (pas dans la classe)
+# [ERROR] INCORRECT (pas dans la classe)
 def _setup_embeddings(self):
 
-# ✅ CORRECT (dans la classe)
+# [OK] CORRECT (dans la classe)
     def _setup_embeddings(self):  # 4 espaces d'indentation
 ```
 
@@ -155,20 +155,20 @@ except ValueError:
 
 ---
 
-## ✅ État Actuel de l'Application
+## [OK] État Actuel de l'Application
 
 ### **Fonctionnel :**
-- ✅ Interface Gradio se lance correctement
-- ✅ Navigation dans les 3 onglets (Configuration, Chat, Monitoring)
-- ✅ Upload de fichiers (validation OK)
-- ✅ Extraction de texte (PDF, DOCX, TXT)
-- ✅ Configuration Mistral AI
-- ✅ Pas de crash TensorFlow
+- [OK] Interface Gradio se lance correctement
+- [OK] Navigation dans les 3 onglets (Configuration, Chat, Monitoring)
+- [OK] Upload de fichiers (validation OK)
+- [OK] Extraction de texte (PDF, DOCX, TXT)
+- [OK] Configuration Mistral AI
+- [OK] Pas de crash TensorFlow
 
 ### **En mode test :**
-- ⚠️ Embeddings désactivés temporairement
-- ⚠️ VectorStore non initialisé (attendu)
-- ⚠️ Chat non fonctionnel (manque embeddings)
+- [WARN] Embeddings désactivés temporairement
+- [WARN] VectorStore non initialisé (attendu)
+- [WARN] Chat non fonctionnel (manque embeddings)
 
 ### **URL d'accès :**
 ```
@@ -178,7 +178,7 @@ http://0.0.0.0:7860
 
 ---
 
-## 🔄 Commande de Lancement
+##  Commande de Lancement
 
 ```bash
 cd /Users/abdeltouati/Desktop/DontREADME/
@@ -187,7 +187,7 @@ python -m app.main
 
 ---
 
-## 🚀 Prochaines Étapes Suggérées
+##  Prochaines Étapes Suggérées
 
 ### **Priorité 1 : Résoudre les embeddings**
 **Options disponibles :**
@@ -218,29 +218,29 @@ python -m app.main
 
 ---
 
-## 📁 Fichiers Principalement Modifiés
+##  Fichiers Principalement Modifiés
 
 | Fichier | Modifications | Status |
 |---------|---------------|--------|
-| `main.py` | Imports + variables TensorFlow | ✅ OK |
-| `vectorstore.py` | Indentation + embeddings désactivés | ⚠️ Temporaire |
-| `file_processor.py` | Gestion robuste des fichiers | ✅ OK |
-| `chat_engine.py` | Imports corrigés | ✅ OK |
-| `orchestration_interface.py` | Code component corrigé | ✅ OK |
-| `.env` | Clé Mistral configurée | ✅ OK |
+| `main.py` | Imports + variables TensorFlow | [OK] OK |
+| `vectorstore.py` | Indentation + embeddings désactivés | [WARN] Temporaire |
+| `file_processor.py` | Gestion robuste des fichiers | [OK] OK |
+| `chat_engine.py` | Imports corrigés | [OK] OK |
+| `orchestration_interface.py` | Code component corrigé | [OK] OK |
+| `.env` | Clé Mistral configurée | [OK] OK |
 
 ---
 
-## 🎉 Succès de la Session
+##  Succès de la Session
 
-**Interface fonctionnelle obtenue !** 🚀
+**Interface fonctionnelle obtenue !** 
 
 L'application se lance maintenant correctement et l'interface est pleinement opérationnelle. Les erreurs critiques ont été résolues :
-- ❌ ➡️ ✅ Imports de modules
-- ❌ ➡️ ✅ Composants Gradio
-- ❌ ➡️ ✅ Crash TensorFlow
-- ❌ ➡️ ✅ Erreurs d'indentation
-- ❌ ➡️ ✅ Traitement de fichiers
+- [ERROR] -> [OK] Imports de modules
+- [ERROR] -> [OK] Composants Gradio
+- [ERROR] -> [OK] Crash TensorFlow
+- [ERROR] -> [OK] Erreurs d'indentation
+- [ERROR] -> [OK] Traitement de fichiers
 
 **Temps total de debug :** ~2 heures  
 **Résultat :** Application prête pour finalisation avec embeddings réels
