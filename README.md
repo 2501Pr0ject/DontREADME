@@ -6,25 +6,25 @@ DontREADME transforme vos documents en une base de connaissances conversationnel
 
 ## Fonctionnalités Principales
 
-### 🧠 **Intelligence Documentaire**
+### **Intelligence Documentaire**
 - **Analyse multiformat** : PDF, DOCX, TXT
 - **Découpage intelligent** : Préservation de la structure et du contexte
 - **Templates adaptatifs** : Optimisation automatique selon le type de document
 - **Recherche sémantique** : Compréhension du sens, pas seulement des mots-clés
 
-### 🔄 **Orchestration Automatisée**
+### **Orchestration Automatisée**
 - **Traitement par lot** : Analyse de dossiers complets en parallèle
 - **Maintenance automatique** : Optimisation et sauvegarde de la base de données
 - **Surveillance continue** : Monitoring de santé et performances
 - **Tests automatisés** : Validation continue de la qualité
 
-### 🎮 **Interface Unifiée**
+### **Interface Unifiée**
 - **Gradio moderne** : Interface web intuitive et responsive
 - **Gestion d'orchestration** : Contrôle des workflows en un clic
 - **Feedback temps réel** : Statuts, métriques et logs intégrés
 - **Monitoring visuel** : Tableaux de bord et alertes
 
-## 🚀 Installation Rapide
+## Installation Rapide
 
 ### Prérequis
 - **Python 3.8+**
@@ -64,7 +64,7 @@ prefect config set PREFECT_API_URL="http://localhost:4200/api"
 python app/main.py
 ```
 
-## 🎯 Guide d'Utilisation
+## Guide d'Utilisation
 
 ### 1. **Première Utilisation**
 
@@ -76,7 +76,7 @@ python app/main.py
 1. Ouvrir l'onglet **"⚙️ Configuration Avancée"**
 2. Saisir votre **clé API Mistral AI**
 3. Uploader votre premier document
-4. Cliquer **"🚀 Traiter le document"**
+4. Cliquer **"Traiter le document"**
 
 ### 2. **Analyse de Documents**
 
@@ -92,9 +92,9 @@ python app/main.py
 
 #### Résultats d'Analyse
 ```
-✅ Document traité avec succès!
+Document traité avec succès!
 
-📄 Informations du document
+Informations du document
 - Fichier: rapport_annuel.pdf
 - Type détecté: académique
 - Chunks créés: 42
@@ -112,19 +112,19 @@ python app/main.py
 
 #### Exemples de Questions
 ```
-💬 "Résume ce document en 3 points clés"
-💬 "Quelles sont les recommandations principales ?"
-💬 "Compare les chiffres de 2023 et 2024"
-💬 "Y a-t-il des risques mentionnés ?"
+"Résume ce document en 3 points clés"
+"Quelles sont les recommandations principales ?"
+"Compare les chiffres de 2023 et 2024"
+"Y a-t-il des risques mentionnés ?"
 ```
 
 #### Réponses Enrichies
 ```
-📝 Réponse détaillée avec analyse contextuelle...
+Réponse détaillée avec analyse contextuelle...
 
 Sources consultées:
-📄 Page 15 | 🏷️ Mots-clés: budget, prévisions, croissance
-📄 Page 23 | 🏷️ Mots-clés: objectifs, stratégie, risques
+Page 15 | Mots-clés: budget, prévisions, croissance
+Page 23 | Mots-clés: objectifs, stratégie, risques
 
 Template: academic | Sources: 3 | Performance: 2.34s
 ```
@@ -132,48 +132,48 @@ Template: academic | Sources: 3 | Performance: 2.34s
 ### 4. **Orchestration Avancée**
 
 #### Accès aux Workflows
-- Ouvrir l'onglet **"🔄 Orchestration Prefect"**
+- Ouvrir l'onglet **"Orchestration Prefect"**
 - Vérifier le statut du serveur (vert = connecté)
 - Utiliser les actions rapides ou workflows avancés
 
 #### Actions Rapides (Un Clic)
 
-##### 🩺 **Vérification Santé**
+##### **Vérification Santé**
 ```
-🟢 Vérification de santé terminée
+Vérification de santé terminée
 
-📊 Score de santé: 87/100
-🏥 Statut: HEALTHY
+Score de santé: 87/100
+Statut: HEALTHY
 
-💻 Système:
+Système:
 - CPU: 25.3%
 - Mémoire: 42.1%
 - Disque: 67.8%
 
-🗄️ ChromaDB: healthy
+ChromaDB: healthy
 ```
 
-##### 📄 **Traitement par Lot**
+##### **Traitement par Lot**
 ```
-✅ Traitement par lot terminé
+Traitement par lot terminé
 
-📊 Résultats:
+Résultats:
 - Documents traités: 12
 - Échecs: 0
 - Taux de succès: 100.0%
 - Temps total: 34.2s
 ```
 
-##### 🛠️ **Maintenance Automatique**
+##### **Maintenance Automatique**
 ```
-✅ Maintenance terminée
+Maintenance terminée
 
-🛠️ Opérations:
+Opérations:
 - Sauvegarde: ✅ success
 - Optimisation: ✅ success
 
-⏱️ Durée: 45.3 secondes
-💾 Amélioration santé: +3.2 points
+Durée: 45.3 secondes
+Amélioration santé: +3.2 points
 ```
 
 ### 5. **Monitoring et Performance**
@@ -186,7 +186,7 @@ Template: academic | Sources: 3 | Performance: 2.34s
 
 #### Tableau de Bord
 ```
-📊 Statistiques Aujourd'hui:
+Statistiques Aujourd'hui:
 - Documents analysés: 24
 - Questions répondues: 156  
 - Temps moyen réponse: 2.1s
@@ -199,7 +199,7 @@ Template: academic | Sources: 3 | Performance: 2.34s
 - **Erreurs répétées** : Notification d'intervention
 - **Maintenance réussie** : Confirmation par email (configurable)
 
-## 🔧 Configuration Avancée
+## Configuration Avancée
 
 ### Variables d'Environnement
 ```bash
@@ -235,7 +235,7 @@ Utilise des exemples concrets et des références précises.
 """
 ```
 
-## 🗂️ Structure des Données
+## Structure des Données
 
 ### Dossiers de Travail
 ```
@@ -255,7 +255,7 @@ data/
 - **Logs** : Format texte horodaté
 - **Métriques** : CSV pour analyse externe
 
-## 🛠️ Maintenance et Dépannage
+## Maintenance et Dépannage
 
 ### Maintenance Régulière
 
@@ -271,10 +271,10 @@ data/
 - ✅ Rapport de performance
 
 #### Mensuelle (Manuelle)
-- 🔍 Vérification des logs
-- 📊 Analyse des métriques
-- 🧹 Nettoyage approfondi
-- 📈 Optimisation des paramètres
+- Vérification des logs
+- Analyse des métriques
+- Nettoyage approfondi
+- Optimisation des paramètres
 
 ### Problèmes Courants
 
@@ -322,7 +322,7 @@ tail -f logs/prefect_worker.log
 python -c "from workflows.tasks import check_system_health; print(check_system_health())"
 ```
 
-## 🔐 Sécurité et Confidentialité
+## Sécurité et Confidentialité
 
 ### Protection des Données
 - **Stockage local** : Aucune donnée envoyée vers des serveurs externes
@@ -342,33 +342,33 @@ python -c "from workflows.tasks import check_system_health; print(check_system_h
 - **Audit** : Logs complets pour traçabilité
 - **Contrôle** : Vous gardez la maîtrise totale de vos données
 
-## 📈 Cas d'Usage
+## Cas d'Usage
 
-### 🏢 **Entreprise**
+### **Entreprise**
 - **Analyse de contrats** : Extraction d'informations clés
 - **Veille documentaire** : Surveillance de rapports sectoriels
 - **Support client** : Base de connaissances conversationnelle
 - **Audit de conformité** : Analyse de politiques et procédures
 
-### 🎓 **Recherche et Éducation**
+### **Recherche et Éducation**
 - **Analyse de publications** : Extraction de méthodologies et résultats
 - **Préparation de cours** : Synthèse de sources multiples
 - **Revue de littérature** : Identification de tendances et gaps
 - **Évaluation de thèses** : Analyse de cohérence et qualité
 
-### ⚖️ **Juridique**
+### **Juridique**
 - **Analyse de jurisprudence** : Recherche de précédents
 - **Préparation de dossiers** : Synthèse de documents légaux
 - **Due diligence** : Analyse de contrats et accords
 - **Veille réglementaire** : Suivi des évolutions légales
 
-### 🏥 **Santé et Médical**
+### **Santé et Médical**
 - **Analyse de rapports** : Extraction d'informations cliniques
 - **Veille scientifique** : Suivi des publications médicales
 - **Protocoles de soins** : Navigation dans les recommandations
 - **Formation continue** : Synthèse de littérature médicale
 
-## 🔮 Évolutions Futures
+## Évolutions Futures
 
 ### Version 2.0 (Roadmap)
 - **Multi-utilisateurs** : Gestion des permissions et espaces
@@ -390,15 +390,15 @@ python -c "from workflows.tasks import check_system_health; print(check_system_h
 
 ---
 
-## 🎯 Conclusion
+## Conclusion
 
 ### Pourquoi Choisir DontREADME ?
 
-✨ **Simplicité** : Interface intuitive, installation en 5 minutes
-🧠 **Intelligence** : IA avancée avec compréhension contextuelle  
-🔄 **Automatisation** : Workflows orchestrés pour gain de productivité
-🛡️ **Sécurité** : Traitement local, contrôle total de vos données
-📈 **Évolutivité** : Architecture extensible et personnalisable
+**Simplicité** : Interface intuitive, installation en 5 minutes
+**Intelligence** : IA avancée avec compréhension contextuelle  
+**Automatisation** : Workflows orchestrés pour gain de productivité
+**Sécurité** : Traitement local, contrôle total de vos données
+**Évolutivité** : Architecture extensible et personnalisable
 
 Mais surtout : **La Flemme de tout lire !!**
 
